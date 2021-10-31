@@ -19,9 +19,8 @@ from WebApp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',index),
+    path('',iniciar_secion),
     path('matematica/',matematica),
     path('quimica/',quimica),
-    path('iniciar_secion/',iniciar_secion),
     path('registrarse/',registrarse),
 ]

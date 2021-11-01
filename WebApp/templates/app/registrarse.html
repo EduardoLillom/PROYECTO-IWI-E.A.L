@@ -7,17 +7,54 @@
     <title>registrarse</title>
 </head>
 <body>
-    <div>
-        <label>Nombre</label>
-        <input type="text">
-    </div>
-    <div>
-        <label>Apellido</label>
-        <input type="text">
-    </div>
-    <div>
-        <label>Contraseña</label>
-        <input type="password">
-    </div>
+    <h2>Registro de usuario</h2>
+
+    <form id="form" method="post" onsubmit="return validacion()">
+        {% csrf_token %}
+        <table>
+            <div>
+                <label>Nombre</label>
+                <input type="text" required name="nombre">
+            </div>
+            <div>
+                <label>Apellido</label>
+                <input type="text" required name="apellido">
+            </div>
+            <div>
+                <label>Correo electronico</label>
+                <input type="email" name="correo">
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input id="contr" type="password" autocomplete="on" required name="contraseña">
+            </div>
+            <div></div>
+                <label>Verifique Contraseña</label>
+                <input id="val_contr" type="password" autocomplete="on" required>
+            </div>
+        </table>
+        <input type="submit" value="Registrarse">
+    </form>
+    <!------Codigo Para autentificar contraseña------>
+    <script>
+
+        function validacion(){
+            var formularioValido = true
+            var form = document.getElementById('form').value;
+            var contr = document.getElementById('contr').value;
+            var val_contr = document.getElementById('val_contr').value;
+            
+            if(!(contr == val_contr)){
+                document.getElementById('contr').innerHTML= '';
+                document.getElementById('val_contr').innerHTML = '';
+                console.log('Contraseña invalida')
+                formularioValido = false
+            };
+            return formularioValido
+            
+        };            
+
+    </script>
+    <!------------------------------------------------>
 </body>
 </html>

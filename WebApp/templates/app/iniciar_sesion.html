@@ -7,6 +7,22 @@
     <title>Inicio sesion</title>
 </head>
 <body>
-    <h1>Inicio secion</h1>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <div>
+                <label>Correo electronico</label>
+                <input type="text" autocomplete="on" name="correo">
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input type="password" autocomplete="on" name="contraseña">
+            </div>
+        </table>
+        <input type="submit" value="iniciar sesion">
+        <a href="registrarse/">
+            <input type="button" value="Registrarse">
+        </a>
+    </form>
 </body>
 </html>

@@ -1,40 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>registrarse</title>
-</head>
-<body>
-    <h2>Registro de usuario</h2>
+    <title>Registrarse</title>
 
-    <form id="form" method="post" onsubmit="return validacion()">
-        {% csrf_token %}
-        <table>
-            <div>
-                <label>Nombre</label>
-                <input type="text" required name="nombre">
-            </div>
-            <div>
-                <label>Apellido</label>
-                <input type="text" required name="apellido">
-            </div>
-            <div>
-                <label>Correo electronico</label>
-                <input type="email" name="correo">
-            </div>
-            <div>
-                <label>Contraseña</label>
-                <input id="contr" type="password" autocomplete="on" required name="contraseña">
-            </div>
-            <div></div>
-                <label>Verifique Contraseña</label>
-                <input id="val_contr" type="password" autocomplete="on" required>
-            </div>
-        </table>
-        <input type="submit" value="Registrarse">
-    </form>
+    {% load  static %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+	<link rel="stylesheet" href="{% static 'app/css/login.css' %}">
+</head>
+
+<body>
+
+    <div class="formulario">
+     <h1>Registro de usuario</h1>
+        <div class="contenedor">
+
+            <form id="form" method="post" onsubmit="return validacion()">
+                {% csrf_token %}
+                <table>
+                    <div class="input-contenedor">
+                        <i class="fas fa-user icon"></i>
+                        <input type="text" required name="nombre" placeholder="Nombre">
+                    </div>
+
+                    <div class="input-contenedor">
+                        <i class="fas fa-user icon"></i>
+                        <input type="text" required name="apellido" placeholder="Apellido">
+                    </div>
+
+                    <div class="input-contenedor">
+                        <i class="fas fa-envelope icon"></i>
+                        <input type="email" name="correo" placeholder="Correo electronico">
+                    </div>
+                    
+                    <div class="input-contenedor">
+                        <i class="fas fa-key icon"></i>
+                        <input id="contr" type="password" autocomplete="on" required name="contraseña" placeholder="Contraseña">
+                    </div>
+
+                    <div class="input-contenedor">
+                        <i class="fas fa-key icon"></i>
+                        <input id="val_contr" type="password" autocomplete="on" required placeholder="Verifique Contraseña">
+                    </div>
+                </table>
+                <input type="submit" value="Registrarse" class="button">
+                <p>¿Ya tienes una cuenta? <a class="link" href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a></p>
+            
+            </form>
+        </div>
+    </div>
     <!------Codigo Para autentificar contraseña------>
     <script>
 

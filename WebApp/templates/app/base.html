@@ -20,16 +20,21 @@
     <header id="header">
 
         <div class="contenedor_inicio">
-            <div > <a class="c_inicio" href="{% url 'home' %}">inicio</a></div>
+            <nav id="nav"> 
+                <ul>
+                    <li><a href="{% url 'home' %}">inicio</a></li> 
+                    <li><a href="{% url 'matematica' %}">Matematica</a></li>
+                    <li><a href="{% url 'quimica' %}">Quimicaa</a></li>
+                </ul>
+            </nav>
+    
         </div>
 
         <div>
             
             <nav id="nav">
                 <ul>
-                    <li><a href="{% url 'matematica' %}">Matematica</a></li>
-                    <li><a href="{% url 'quimica' %}">Quimicaa</a></li>
-            
+                   
                     <li> <a href="{% url 'iniciar_sesion' %}">Iniciar sesion</a></li>
                     <li><a href="{% url 'registrarse' %}">registrarse</a></li>
                 </ul>

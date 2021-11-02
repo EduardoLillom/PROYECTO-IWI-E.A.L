@@ -23,8 +23,11 @@
             <nav id="nav"> 
                 <ul>
                     <li><a href="{% url 'home' %}">inicio</a></li> 
+                    {% if user.is_authenticated %}
                     <li><a href="{% url 'matematica' %}">Matematica</a></li>
                     <li><a href="{% url 'quimica' %}">Quimica</a></li>
+                    {% endif %}
+
                 </ul>
             </nav>
     
@@ -47,11 +50,14 @@
 
     </header>
 
+    {% if user.is_authenticated %}
     <div id="contenido">
         
         {% block contenido%}
         {% endblock %}
+        
     </div>
+    {% endif %}
 
     {% block js %}
     {% endblock %}

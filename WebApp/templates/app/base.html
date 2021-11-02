@@ -24,7 +24,7 @@
                 <ul>
                     <li><a href="{% url 'home' %}">inicio</a></li> 
                     <li><a href="{% url 'matematica' %}">Matematica</a></li>
-                    <li><a href="{% url 'quimica' %}">Quimicaa</a></li>
+                    <li><a href="{% url 'quimica' %}">Quimica</a></li>
                 </ul>
             </nav>
     
@@ -34,9 +34,12 @@
             
             <nav id="nav">
                 <ul>
-                   
-                    <li> <a href="{% url 'iniciar_sesion' %}">Iniciar sesion</a></li>
-                    <li><a href="{% url 'registrarse' %}">registrarse</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
+                    {% else %}
+                        <li> <a href="{% url 'iniciar_sesion' %}">Iniciar sesion</a></li>
+                        <li><a href="{% url 'registrarse' %}">registrarse</a></li>
+                    {% endif %}
                 </ul>
             </nav>
 

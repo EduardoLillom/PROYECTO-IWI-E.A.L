@@ -1,7 +1,8 @@
 from django.db.models.manager import EmptyManager
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -13,26 +14,38 @@ def matematica(request):
 def quimica(request):
     return render(request,'app/quimica.html')
 
+
 def iniciar_sesion(request):
     if request.method == 'POST':
+        #---recibir datos del formulario---
         correo = request.POST['correo']
         contrasena = request.POST['contraseña']
+        #---validar datos---
         user = authenticate(username=correo, password=contrasena)
-        print(user)
         if user is not None:
+            login(request, user)
             return redirect('home')
     return render(request,'app/iniciar_sesion.html')
 
 def registrarse(request):
     if request.method == 'POST':
+        #---recibir datos del formulario---
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
         correo = request.POST['correo']
         contraseña = request.POST['contraseña']
+        #---Crea Usuario---
+        if User.objects.filter(username=correo).exists():
+            messages.error(request, 'El correo ya existe')
+            return render(request,'app/registrarse.html')
         user = User.objects.create_user(username=correo,password=contraseña,email=correo,last_name=apellido,first_name=nombre,)
         user.save()
         return redirect('home')
     return render(request,'app/registrarse.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 def foro(request):
     pass

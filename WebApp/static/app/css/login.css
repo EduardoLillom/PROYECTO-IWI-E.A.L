@@ -25,6 +25,8 @@ body{
 }
 
 h1{
+    padding: 20px;
+    padding-bottom: 15px;
     text-align: center;
     color: #1a2537;
     font-size: 40px;
@@ -41,13 +43,15 @@ input[type="email"],
 input[type="password"]{
     font-size: 20px;
     width: 87%;
-    padding: 10px;
+    padding: 9px;
     border: none;
 
     
 }
 
 p{
+    padding-top: 10px;
+    padding-bottom: 0px;
     text-align: center;
 }
 .button{

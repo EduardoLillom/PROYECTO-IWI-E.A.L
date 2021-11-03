@@ -15,3 +15,12 @@ class problema(models.Model):
     times_result = models.IntegerField()
     points = models.IntegerField()
     difficulty = models.IntegerField()
+
+class PreguntasMate(models.Model):
+    siglas = models.CharField(max_length=7)
+    dificultad = models.CharField(max_length=20)
+    contenido = models.CharField(max_length=200)
+    pregunta = models.TextField()
+    solucion = models.TextField()
+    pista = models.CharField(max_length=200)
+    puntos = models.IntegerField()

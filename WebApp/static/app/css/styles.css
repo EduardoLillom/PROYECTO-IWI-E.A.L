@@ -51,6 +51,43 @@ nav > ul > li {
     margin-left: 10px;
 }
 
+/* test si hay algo mal borrar */
+nav ul,ol {
+    list-style: none;
+}
+
+nav li a {
+    background-color: rgb(3, 16, 94); 
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+nav li a:hover{
+    background-color: #090030;
+
+}
+
+nav li>a{
+    position: relative;
+}
+
+nav > li {
+    float: left;
+}
+
+nav li ul {
+    display: none;
+    position: absolute;
+    min-width: 140px;
+}
+
+nav li:hover > ul{
+    display: block;
+}
+
+/* -------------------------------------- */
 nav a {
     color:white;
     text-decoration: none;

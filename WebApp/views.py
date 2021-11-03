@@ -33,13 +33,15 @@ def registrarse(request):
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
         correo = request.POST['correo']
-        contraseña = request.POST['contraseña']
+        password = request.POST['contraseña']
         #---Crea Usuario---
         if User.objects.filter(username=correo).exists():
             messages.error(request, 'El usuario ya existe.')
             return render(request,'app/registrarse.html')
-        user = User.objects.create_user(username=correo,password=contraseña,email=correo,last_name=apellido,first_name=nombre,)
+        user = User.objects.create_user(username=correo,password=password,email=correo,last_name=apellido,first_name=nombre,)
         user.save()
+        user = authenticate(username=correo, password=password)
+        login(request, user)
         return redirect('home')
     return render(request,'app/registrarse.html')
 

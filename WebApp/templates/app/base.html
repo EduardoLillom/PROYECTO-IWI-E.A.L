@@ -24,7 +24,14 @@
                 <ul>
                     <li><a href="{% url 'home' %}">inicio</a></li> 
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'matematica' %}">Matematica</a></li>
+                    <li><a href="">Matematica</a>
+                        <ul>
+                            <li><a href="">MAT021</a></li>
+                            <li><a href="">MAT022</a></li>
+                            <li><a href="">MAT023</a></li>
+                            <li><a href="">MAT024</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{% url 'quimica' %}">Quimica</a></li>
                     {% endif %}
 

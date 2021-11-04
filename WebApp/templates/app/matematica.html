@@ -10,43 +10,44 @@
         <p>por favor ingrese las espesificasiones para generar el certamen</p>
     </div>
     <form method="post">
+        {% csrf_token %}
         <div>
             <h3>Materias de calculo</h3>
             <ul>
-                <li><input type="checkbox" id="cbox1" value="second_checkbox"> <label for="cbox2">Números reales</label></li>
-                <li><input type="checkbox" id="cbox2" value="third_checkbox"> <label for="cbox3">Funciones</label></li>
-                <li><input type="checkbox" id="cbox3" value="fourth_checkbox"> <label for="cbox4">Límites</label></li>
-                <li><input type="checkbox" id="cbox4" value="fifth_checkbox"> <label for="cbox5">Continuidad</label></li>
-                <li><input type="checkbox" id="cbox5" value="sixth_checkbox"> <label for="cbox6">Cálculo diferencial</label></li>
+                <li><input type="checkbox" id="cbox1" name='numeros_reales' > <label for="cbox2">Números reales</label></li>
+                <li><input type="checkbox" id="cbox2" name='funciones' > <label for="cbox3">Funciones</label></li>
+                <li><input type="checkbox" id="cbox3" name='limite' > <label for="cbox4">Límites</label></li>
+                <li><input type="checkbox" id="cbox4" name='continuidad'> <label for="cbox5">Continuidad</label></li>
+                <li><input type="checkbox" id="cbox5" name='calculo_diferencial'> <label for="cbox6">Cálculo diferencial</label></li>
             </ul>
         </div>
         <div>
             <h3>Materias de complemento</h3>
             <ul>
-                <li><input type="checkbox" id="cbox6" value="second_checkbox"> <label for="cbox2">Lógica proposicional</label></li>
-                <li><input type="checkbox" id="cbox7" value="second_checkbox"> <label for="cbox2">Conjuntos</label></li>
-                <li><input type="checkbox" id="cbox8" value="second_checkbox"> <label for="cbox2">Relaciones</label></li>
-                <li><input type="checkbox" id="cbox9" value="second_checkbox"> <label for="cbox2">Trigonometría</label></li>
-                <li><input type="checkbox" id="cbox10" value="second_checkbox"> <label for="cbox2">Exponencial y logaritmo</label></li>
-                <li><input type="checkbox" id="cbox11" value="second_checkbox"> <label for="cbox2">Geometría analítica</label></li>
-                <li><input type="checkbox" id="cbox12" value="second_checkbox"> <label for="cbox2">Inducción</label></li>
-                <li><input type="checkbox" id="cbox13" value="second_checkbox"> <label for="cbox2">Sumatorias</label></li>
-                <li><input type="checkbox" id="cbox14" value="second_checkbox"> <label for="cbox2">Números complejos</label></li>
-                <li><input type="checkbox" id="cbox15" value="second_checkbox"> <label for="cbox2">Polinomios</label></li>          
+                <li><input type="checkbox" id="cbox6" name='logica_proposicional' > <label for="cbox2">Lógica proposicional</label></li>
+                <li><input type="checkbox" id="cbox7" name='conjunto' > <label for="cbox2">Conjuntos</label></li>
+                <li><input type="checkbox" id="cbox8" name='relaciones'><label for="cbox2">Relaciones</label></li>
+                <li><input type="checkbox" id="cbox9" name='trigonometria'><label for="cbox2">Trigonometría</label></li>
+                <li><input type="checkbox" id="cbox10" name='exponencial_logaritmo'><label for="cbox2">Exponencial y logaritmo</label></li>
+                <li><input type="checkbox" id="cbox11" name='geometria_analitica'><label for="cbox2">Geometría analítica</label></li>
+                <li><input type="checkbox" id="cbox12" name='induccion'><label for="cbox2">Inducción</label></li>
+                <li><input type="checkbox" id="cbox13" name='sunatoria'><label for="cbox2">Sumatorias</label></li>
+                <li><input type="checkbox" id="cbox14" name='numeros_complejos'><label for="cbox2">Números complejos</label></li>
+                <li><input type="checkbox" id="cbox15" name='polinomios'><label for="cbox2">Polinomios</label></li>          
             </ul>
         </div>
         <div>
-            <input type="checkbox" id="cboxTime" value="second_checkbox" onchange="showtime()" ><label for="cbox2">Tiempo para realizar el Certamen</label>
+            <input type="checkbox" id="cboxTime" onchange="showtime()"><label for="cbox2">Tiempo para realizar el Certamen</label>
             <div id="time" style="display: none;" >
                 <input type="number" name="tiempo" placeholder="tiempo">
             </div>
             <div>
                 <label>Ingrese numero de preguntas que quiere en el certamen</label>
-                <input type="number" placeholder="Numero de preguntas" >
+                <input type="number" name='number_of_questions' placeholder="Numero de preguntas" >
             </div>
         </div>
         <div>
-            <input type="button" value="Generar certamen">
+            <input type="submit" value="Generar certamen">
         </div>
 
     </form>

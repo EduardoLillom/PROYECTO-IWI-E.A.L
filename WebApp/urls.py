@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import quimica, index, matematica, iniciar_sesion,registrarse,logout_view, foro1, mi_perfil
+from .views import quimica, index, matematica, iniciar_sesion,registrarse,logout_view, foro1, mi_perfil, certamen
 
 urlpatterns = [
     path('', iniciar_sesion, name="iniciar_sesion"),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('registrarse/', registrarse, name="registrarse"),
     path('foro/', foro1, name="foro1"),
     path('mi_perfil/', mi_perfil, name="mi_perfil"),
+    path('certamen/', certamen, name="certamen"),
 ]

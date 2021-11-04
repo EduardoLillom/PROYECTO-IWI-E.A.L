@@ -14,6 +14,11 @@ def matematica(request):
 def quimica(request):
     return render(request,'app/quimica.html')
 
+def foro1(request):
+    return render(request,'app/foro.html')
+
+def mi_perfil(request):
+    return render(request,'app/mi_perfil.html')
 
 def iniciar_sesion(request):
     if request.method == 'POST':

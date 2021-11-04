@@ -14,48 +14,45 @@
     <link rel="stylesheet" href="{% static 'app/css/styles.css' %}">
     
 </head>
+
 <body>
+    <header>
+        <nav class="navegacion">
+            <!--Menu de lado izquierdo -->
+            <ul class="menu">
+                <li><a href="{% url 'home' %}">Inicio</a></li> 
 
-    
-    <header id="header">
+                {% if user.is_authenticated %} 
+                <li><a class="mat">Matematica</a>
 
-        <div class="contenedor_inicio">
-            <nav id="nav"> 
-                <ul>
-                    <li><a href="{% url 'home' %}">inicio</a></li> 
-                    {% if user.is_authenticated %}
-                    <li><a href="">Matematica</a>
-                        <ul>
-                            <li><a href="{% url 'MAT021' %}">MAT021</a></li>
-                            <li><a href="">MAT022</a></li>
-                            <li><a href="">MAT023</a></li>
-                            <li><a href="">MAT024</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="{% url 'quimica' %}">Quimica</a></li>
-                    {% endif %}
+                    <ul class="submenu">
+                        <li><a href="{% url 'MAT021' %}">MAT021</a></li>
+                        <li><a href="">MAT022</a></li>
+                        <li><a href="">MAT023</a></li>
+                        <li><a href="">MAT024</a></li>
+                    </ul>
 
-                </ul>
-            </nav>
-    
-        </div>
+                </li>
+                <li><a href="{% url 'quimica' %}">Química</a></li>
+                <li><a href="{% url 'foro1' %}">Foro</a></li>
+                {% endif %}
 
-        <div>
-            
-            <nav id="nav">
-                <ul>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
-                    {% else %}
-                        <li> <a href="{% url 'iniciar_sesion' %}">Iniciar sesion</a></li>
-                        <li><a href="{% url 'registrarse' %}">registrarse</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
+            </ul>
 
-        </div>
-
+            <!--Menu de lado derecho-->
+            <ul>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                <li><a href="{% url 'mi_perfil' %}">Mi perfil</a></li>
+                {% else %}
+                <li><a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+                <li><a href="{% url 'registrarse' %}">Registrarse</a></li>
+                {% endif %}
+                
+            </ul>
+        </nav>
     </header>
+               
 
     {% if user.is_authenticated %}
     <div id="contenido">
@@ -63,6 +60,10 @@
         {% block contenido%}
         {% endblock %}
         
+    </div>
+    {% else %}
+    <div id="contenido">
+        <h1>Por Favor, inicia sesión para poder acceder al contenido :)</h1>
     </div>
     {% endif %}
 

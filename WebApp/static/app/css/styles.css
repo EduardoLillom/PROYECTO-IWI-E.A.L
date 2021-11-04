@@ -1,105 +1,115 @@
-* {
-    margin:0;
-    padding:0;
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-body {
-    background-color:#ffffff;
-    font-family: 'Open Sans', sans-serif;
+body{
+    background: white;
 }
 
-
-header {
-    width: 100%;
-    height: 80px;
-    background-color: #1483dd;
-    /*margin-left: 30px;
-    padding-left: 30px;*//*right-top-bottom*/
+.navegacion{
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    padding-inline: 30px;
+    margin: auto;
+    background: #1483dd;
 }
 
-header > div {
-    width: 50%;
-}
-
-.contenedor_inicio {
-
-    display: flex;
-    align-items: center;
-    
-}
-.c_inicio{
-    color:white;
-    text-decoration: none;
-    margin-left: 50px;
-}
-
-nav {
-    display: flex;
-    justify-content: flex-end;/*flex-start - center - flex-end*/ /*horizontal*/
-    align-items: center;
-    height: 100%;
-}
-
-nav > ul {
-    margin-right: 50px;
-}
-
-nav > ul > li {
-    display: inline;
-    margin-left: 10px;
-}
-
-/* test si hay algo mal borrar */
-nav ul,ol {
+.navegacion ul{
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-nav li a {
-    background-color: rgb(3, 16, 94); 
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px;
+.navegacion > ul >li{
+    position: relative;
     display: inline-block;
 }
 
-nav li a:hover{
-    background-color: #090030;
-
-}
-
-nav li>a{
-    position: relative;
-}
-
-nav > li {
-    float: left;
-}
-
-nav li ul {
-    display: none;
-    position: absolute;
-    min-width: 140px;
-}
-
-nav li:hover > ul{
+.navegacion > ul > li > a{
     display: block;
-}
-
-/* -------------------------------------- */
-nav a {
-    color:white;
+    padding: 20px 20px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
     text-decoration: none;
 }
 
+.navegacion > ul li a:hover{
+    color: white;
+    transition: all .3s;
+}
 
-/*CONTENIDO PRINCIPAL*/
+.navegacion > ul li:hover{
+    background: #3a9cec;
+    transition: all .3s;
+}
 
-#contenido {
-    width: 80%;
-    margin:auto;
-    max-width: 1280px;
-    min-height: 100vh;
+/* sub menu*/
+.submenu{
+    position: absolute;
+    color: white;
+    background: #03569b;
+    
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s;
+    /* width para aumentar el tamaño del desplegable*/
+    width: 100%;
 
 }
+
+.submenu li a{
+    display: block;
+    padding: 15px;
+
+    color: rgb(255, 255, 255);
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
+}
+
+.menu li:hover .submenu{
+    visibility: visible;
+    opacity: 1;
+}
+
+.mat{
+    color: white;
+}
+
+/*CONTENIDO PRINCIPAL*/
+#contenido {
+    width: 90%;
+    padding-top: 30px;
+    margin:auto;
+}
+/*-----------------*/
+
+
+
+/* ESTILO DE GENERADOR DE CERTAMENES */
+.flex-container{
+    display: flex;
+    background-color: rgb(192, 215, 247);
+    padding: 10px;
+    border-radius: 18px ;
+    margin-bottom: 40px;
+}
+
+.flex-container >div{
+    width: 50%;
+    margin: 10px;
+    text-align: left;
+}
+.flex-container> div >div{
+    padding-bottom: 40px;
+}
+.flex-container> div> div> div{
+    margin-left: 8px;
+}
+
+
+/*----------------------------------*/

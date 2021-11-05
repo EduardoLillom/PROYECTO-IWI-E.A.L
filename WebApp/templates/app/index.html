@@ -18,6 +18,38 @@
     <p>Ranking puntos de prestigo</p>
     <p>preguntas recientes</p>
     <p>problema popular (problema con menos puntos de aciertos)</p>
+     <h1>MathJax</h1>
+    <p>$$ {J(\theta) =\frac{1}{2m} [\sum^m_{i=1}(h_\theta(x^{(i)}) - y^{(i)})2 + \lambda\sum^n_{j=1}\theta^2_j} $$</p>
+    <p>$$ { A=\left ( \begin {array}{rr} 1 & 1 \\ 1 & 1 \end {array} \right )}$$</p>
+    <p>$$ {\int \frac {\ln (5x+2)}{\sqrt {x}} dx } $$</p>
+
+    <h1>MathQuill</h1>
+
+
+              <!--EXAMPLE COMMON TEXT TRANSFORMED WITH MATHQUILL  -->
+              <p>Solve <span id="problem">f(x) = ax^2 + bx + c + = 0</span>.</p>
+              <script>
+                    var problemSpan = document.getElementById('problem');
+                   MQ.StaticMath(problemSpan);
+              </script> 
+  
+  
+        <p>Texto matemático editable: </p>
+          <!-- EXAMPLE TO  CREATE AN EDITABLE MATH FIELD  -->
+          <p><span id="answer">x=</span></p>
+          <script>
+              var answerSpan = document.getElementById('answer');
+              var answerMathField = MQ.MathField(answerSpan, {
+                  handlers: {
+                  edit: function() {
+                      var enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
+                      checkAnswer(enteredMath);
+                  }
+                  }
+              });
+          </script>
+
+    
 </div>
 
 {% endblock %}

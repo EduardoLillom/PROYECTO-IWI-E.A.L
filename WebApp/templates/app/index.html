@@ -2,8 +2,6 @@
 {% load static %}
 
 
-{% block js %}
-{% endblock %}
 
 {% block css %}
 {% endblock %}
@@ -18,6 +16,34 @@
     <p>Ranking puntos de prestigo</p>
     <p>preguntas recientes</p>
     <p>problema popular (problema con menos puntos de aciertos)</p>
+
+
+    <h1>Editor MathQuill</h1>
+
+        <!--aqui se muestra el problema escrito-->
+        <p>Problema escrito:  <span class="display" id="problem"> </span></p>
+
+        <p>Texto matemático editable: </p>
+          <!-- Botones del editor -->
+          <div id="botones">
+          <button id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
+          <button id="xAlCuadrado" class="btn btn-danger"> ☐^{2} </button>
+          <button id="elevar" class="btn btn-danger"> ☐^☐ </button>
+          <button id="raizN" class="btn btn-danger"> \sqrt[☐]{☐} </button>
+          <button id="fraccion" class="btn btn-danger"> \frac{☐}{☐} </button>
+          <button id="logaritmo" class="btn btn-danger"> \log_{☐}(☐) </button>
+          <button id="limite" class="btn btn-danger"> \lim </button>
+          <button id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
+          <button id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
+          <button id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
+          <button id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
+          <button id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
+
+          <button id="boton-escribir" class="btn btn-success">escribir</button></div>
+
+          <!--campo para escribir el problema-->
+          <p><span id="answer">x=</span></p>
+           
 </div>
 
 {% endblock %}

@@ -4,15 +4,30 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from WebApp.models import PreguntasMate
+from random import sample
 # Create your views here.
+
+from .models import preguntaPrueba # prueba
+
+def crearPregunta(request):    
+    pregunta_Prueba = preguntaPrueba.objects.all()
+    data={
+            'pregunta_Prueba' : pregunta_Prueba
+    }
+    return render(request,'app/crearPregunta.html',data)
+
+def guardarPregunta(request):
+    texto=request.POST["texto"]
+    nombre_pregunta = request.POST["nombre_pregunta"]
+    pregunta_math = request.POST["pregunta_math"]
+    pregunta = preguntaPrueba.objects.create(texto=texto, nombre_pregunta=nombre_pregunta, pregunta_math=pregunta_math )
+    return redirect('/crearPregunta/')
 
 def index(request):
     return render(request,'app/index.html')
 
 def certamen(request):
-    pass
-
-def matematica(request):
     if request.method == 'POST':
         datos = request.POST
         num_preg = int(request.POST['number_of_questions'])
@@ -39,13 +54,19 @@ def matematica(request):
                 preg_for_tem[tema] =  num_preg//len(temas) 
             for e in range(preguntas_restantes):
                 preg_for_tem[choice(temas)] +=1
-        print(preg_for_tem)
 
+    preguntas = []
+    for tema in preg_for_tem:
+        preguntas_db = PreguntasMate.objects.filter(tema=tema).values()        
+        preguntas.extend(sample(list(preguntas_db),preg_for_tem[tema]))
+
+    data = {'clase':'MAT021',
+    'preguntas':preguntas,
+    }
+    return render(request,'app/base_certamenes.html',data)
+
+def matematica(request):
     return render(request,'app/matematica.html')
-
-
-def quimica(request):
-    return render(request,'app/quimica.html')
 
 def foro1(request):
     return render(request,'app/foro.html')

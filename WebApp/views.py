@@ -6,6 +6,28 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 # Create your views here.
 
+from .models import preguntaPrueba # prueba
+
+def crearPregunta(request):    
+    pregunta_Prueba = preguntaPrueba.objects.all()
+    data={
+            'pregunta_Prueba' : pregunta_Prueba
+    }
+    return render(request,'app/crearPregunta.html',data)
+
+def guardarPregunta(request):
+    texto=request.POST["texto"]
+    nombre_pregunta = request.POST["nombre_pregunta"]
+    pregunta_math = request.POST["pregunta_math"]
+
+
+    pregunta = preguntaPrueba.objects.create(texto=texto, nombre_pregunta=nombre_pregunta, pregunta_math=pregunta_math )
+    return redirect('/crearPregunta/')
+
+
+
+
+
 def index(request):
     return render(request,'app/index.html')
 
@@ -44,8 +66,7 @@ def matematica(request):
     return render(request,'app/matematica.html')
 
 
-def quimica(request):
-    return render(request,'app/quimica.html')
+
 
 def foro1(request):
     return render(request,'app/foro.html')

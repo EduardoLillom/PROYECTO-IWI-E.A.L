@@ -84,6 +84,7 @@ body{
 #contenido {
     width: 90%;
     padding-top: 30px;
+    padding-bottom: 50px;
     margin:auto;
 }
 /*-----------------*/
@@ -118,4 +119,31 @@ body{
     border-color: black;
 
 }
+
+#my-math-input {
+    color: white;
+    border-color: white;
+    background: black;
+  }
+#my-math-input .mq-matrixed {
+    background: black;
+  }
+#my-math-input .mq-matrixed-container {
+    filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
 /*-----*/
+
+
+/*-------creadror de preguntas--------*/
+.pregunta{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.texto-preguntas{
+    padding-right: 100px;
+}
+
+.diseño-problema{
+    background-color: white;
+}

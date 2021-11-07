@@ -1,3 +1,5 @@
+
+
 //Da formato al problema escrito, aunque en un principio no hay nada, *se podria borrar
 var problemSpan = document.getElementById('problem');
 MQ.StaticMath(problemSpan);
@@ -15,6 +17,8 @@ var answerMathField = MQ.MathField(answerSpan, {
         //boton escribe el problema editado en pantalla
         function escribe(){
             document.getElementById("problem").innerHTML =enteredMath;
+            //jQuery para añdir la pregunta en latex a un input
+            $("#pregunta_math").val(enteredMath);
         }
         document.getElementById("boton-escribir").onclick = function(){
             escribe();
@@ -74,7 +78,7 @@ var raizN = document.getElementById('raizN');
 MQ.StaticMath(raizN);
 
 function botonraizN(){
-    answerMathField.write('\\sqrt[]{}'); 
+    answerMathField.cmd('\\nthroot'); 
     answerMathField.focus() // centra el cursor en la ultima función escrita
 }
 document.getElementById("raizN").onclick = function(){

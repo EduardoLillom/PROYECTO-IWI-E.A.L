@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div>
+    <article>
+        <header>
+            <h2>
+                {{instance.texto}}
+            </h2>
+        </header>
+        <div>
+            <div>
+                <a href="">
+                    {{instance.usuario.username}}
+                </a>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <button type="submit">
+                    comentar
+                </button>
+            </form>
+
+        </div>
+    </article>
+    {{ver_comentario.count}}
+    {% for ver_comentario in ver_comentario %}
+    <div>
+        {{ver_comentario.usuario}}
+        {{ver_comentario.texto}} {{ver_comentario.tiempo}}
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

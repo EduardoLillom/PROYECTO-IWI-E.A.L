@@ -5,11 +5,27 @@
 {% block contenido %}
 
 <div>
-    <h1>Foro</h1>
-    <p>Aquí puedes hacer preguntas si tienes problemas, tambien puedes ayudar a los demas con sus dudas</p>
-    <div>
-        <p>preguntas recients</p>
-    </div>
+    <p>
+        {% for post in post %}
+            <h1>
+                {{post.texto}}
+            </h1>
+        <div>
+            <div>
+            <a href="">
+                {{post.usuario}}
+            </a>
+            </div>
+            <div>
+                <a href="{% url 'foro2' post.pk %}">
+                    <button>
+                        comentar
+                    </button>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </p>
 </div>
 
 {% endblock %}

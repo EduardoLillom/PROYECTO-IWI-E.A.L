@@ -57,6 +57,13 @@ class profile(models.Model):
     resolved_questions = models.IntegerField(default=0)
     punctuation = models.IntegerField(default=0)
 
+def create_profile(sender, instance, created, *args, **kwargs):
+    if created:
+        profile.objects.create(name=instance)
+
+post_save.connect(create_profile, sender=User)
+
+
 class problema(models.Model):
     exercise = models.TextField()
     alternative = models.TextField()
@@ -89,8 +96,6 @@ class PostForo(models.Model):
         content_type = ContentType.objects.get_for_model(PostForo)
         return content_type
 
-
-
 def nueva_url(instance, url=None):
     
     slug = slugify(instance.texto)
@@ -106,8 +111,6 @@ def nueva_url(instance, url=None):
 
     return slug
 
-
-
 def url_creada(sender, instance, *args, **kwargs):
 
     if not instance.slug:
@@ -115,8 +118,6 @@ def url_creada(sender, instance, *args, **kwargs):
         instance.slug = nueva_url(instance)
 
 pre_save.connect(url_creada, sender = PostForo)
-
-
 
 class ComentarioManager(models.Manager):
 
@@ -150,7 +151,6 @@ class Comentario(models.Model):
         ordering = ['-tiempo']
 
 
-
 #-------------------------- Modelo Preguntas Mate -------------------------
 
 
@@ -179,9 +179,6 @@ class PreguntasMate(models.Model):
     pista = models.CharField(max_length=200)
     puntos = models.IntegerField()
 
-
-
-
 #modelo prueba de pregunta
 class preguntaPrueba(models.Model):
     nombre_pregunta = models.CharField(max_length=50)
@@ -195,5 +192,3 @@ class preguntaPrueba(models.Model):
 
     def __str__(self):
         return self.nombre_pregunta
-
-

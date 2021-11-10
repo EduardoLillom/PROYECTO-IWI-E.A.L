@@ -4,11 +4,26 @@
 {% block contenido %}
 
 <body>
-    <p>Esta es la pregunta 1 {{preguntas.0}}</p>
+    <p>Pregunta: </p>
+    <!-- <div>
+        <ul>
+            <li><input type="checkbox" id="cbox1" value="alternativa_a"> <label for="cbox1">A) </label></li>
+            <li><input type="checkbox" id="cbox2" value="alternativa_b"> <label for="cbox2">B) </label></li>
+            <li><input type="checkbox" id="cbox3" value="alternativa_c"> <label for="cbox3">C) </label></li>
+            <li><input type="checkbox" id="cbox4" value="alternativa_d"> <label for="cbox4">D) </label></li>
+        </ul>
+    </div> -->
+    {% for e in preguntas %}
+        <p>{{e.pregunta}}</p>
+        <ul>
+            <li><input type="checkbox" id="cbox1" value="a"> <label for="cbox1">A) {{e.a}}</label></li>
+            <li><input type="checkbox" id="cbox2" value="b"> <label for="cbox2">B) {{e.b}}</label></li>
+            <li><input type="checkbox" id="cbox3" value="c"> <label for="cbox3">B) {{e.c}}</label></li>
+            <li><input type="checkbox" id="cbox4" value="d"> <label for="cbox4">B) {{e.d}}</label></li>
+        </ul>
+    {% endfor %}
 
-    <p>Esta es la pregunta 2 {{preguntas.1}}</p>
 
-    
 </body>
 
 

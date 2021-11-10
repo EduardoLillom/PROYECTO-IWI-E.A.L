@@ -1,12 +1,13 @@
 from random import choice
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.manager import EmptyManager
+from django.forms.utils import pretty_name
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from WebApp.models import PreguntasMate, PostForo
+from WebApp.models import PreguntasMate, PostForo, profile
 from random import sample
 from .forms import FormComentarios
 # Create your views here.
@@ -24,12 +25,13 @@ def guardarPregunta(request):
     texto=request.POST["texto"]
     nombre_pregunta = request.POST["nombre_pregunta"]
     pregunta_math = request.POST["pregunta_math"]
-    pregunta = preguntaPrueba.objects.create(texto=texto, nombre_pregunta=nombre_pregunta, pregunta_math=pregunta_math )
+    preguntaPrueba.objects.create(texto=texto, nombre_pregunta=nombre_pregunta, pregunta_math=pregunta_math )
     return redirect('/crearPregunta/')
 
 def index(request):
     return render(request,'app/index.html')
 
+#----Generador de certamenes----
 def certamen(request):
     if request.method == 'POST':
         datos = request.POST
@@ -58,11 +60,27 @@ def certamen(request):
             for e in range(preguntas_restantes):
                 preg_for_tem[choice(temas)] +=1
 
-    preguntas = []
+    preguntaRandom = []
     for tema in preg_for_tem:
         preguntas_db = PreguntasMate.objects.filter(tema=tema).values()        
-        preguntas.extend(sample(list(preguntas_db),preg_for_tem[tema]))
-
+        preguntaRandom.extend(sample(list(preguntas_db),preg_for_tem[tema]))
+    
+    preguntas = []
+    for p in preguntaRandom:
+        e = {'id':'',
+            'pregunta':'',
+            'a':'',
+            'b':'',
+            'c':'',
+            'd':''}
+        e['id'] = p['id']
+        e['pregunta'] = p['pregunta']
+        e['a'] = p['alternativa_a']
+        e['b'] = p['alternativa_b']
+        e['c'] = p['alternativa_c']
+        e['d'] = p['alternativa_d']    
+        preguntas.append(e)
+  
     data = {'clase':'MAT021',
     'preguntas':preguntas,
     }
@@ -71,11 +89,17 @@ def certamen(request):
 def matematica(request):
     return render(request,'app/matematica.html')
 
-def foro1(request):
-    return render(request,'app/foro.html')
-
+#----Todo lo relacionado con el usuario----
 def mi_perfil(request):
-    return render(request,'app/mi_perfil.html')
+    correo = request.user.email
+    nombre_usuario = request.user.first_name + ' ' + request.user.last_name
+    id = request.user.id
+    puntos = profile.objects.filter(name_id=id).values()[0]['punctuation']
+    contexto = { 'UserName' : nombre_usuario
+                ,'correo' : correo
+                ,'puntos' : puntos}
+
+    return render(request,'app/mi_perfil.html',contexto)
 
 def iniciar_sesion(request):
     if request.method == 'POST':
@@ -111,6 +135,7 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+#----Todo lo relacionado con el foro----
 def foro(request):
     
     post = PostForo.objects.all()
@@ -122,6 +147,9 @@ def foro(request):
     }
 
     return render(request, 'app/foro.html', contexto)
+
+def foro1(request):
+    return render(request,'app/foro.html')
 
 def Comentarios_pk(request, pk):
 
@@ -165,5 +193,3 @@ def comentario_id(request, pk):
         'comentario':instance
     }
     return render(request, 'app/instance.html', contexto)
-def perfil_user(request):
-    pass

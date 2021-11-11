@@ -1,5 +1,6 @@
 from random import choice
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.expressions import Value
 from django.db.models.manager import EmptyManager
 from django.forms.utils import pretty_name
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -62,23 +63,25 @@ def certamen(request):
 
     preguntaRandom = []
     for tema in preg_for_tem:
-        preguntas_db = PreguntasMate.objects.filter(tema=tema).values()        
+        preguntas_db = PreguntasMate.objects.filter(tema=tema).values()      
         preguntaRandom.extend(sample(list(preguntas_db),preg_for_tem[tema]))
     
     preguntas = []
     for p in preguntaRandom:
         e = {'id':'',
             'pregunta':'',
-            'a':'',
-            'b':'',
-            'c':'',
-            'd':''}
+            'A':'',
+            'B':'',
+            'C':'',
+            'D':'',
+            'E':'',}
         e['id'] = p['id']
         e['pregunta'] = p['pregunta']
         e['a'] = p['alternativa_a']
         e['b'] = p['alternativa_b']
         e['c'] = p['alternativa_c']
-        e['d'] = p['alternativa_d']    
+        e['d'] = p['alternativa_d']
+        e['e'] = p['alternativa_e']  
         preguntas.append(e)
   
     data = {'clase':'MAT021',
@@ -88,6 +91,66 @@ def certamen(request):
 
 def matematica(request):
     return render(request,'app/matematica.html')
+
+#----Resultado del certamen-----
+def resultado(request):
+    if request.method == 'POST':
+        data = request.POST
+
+        #---verificar si las alternativas son correctas y las guarda en formato (id,True/False,puntos)---
+        correccion_preguntas = []
+        for e in data:
+            if e != 'csrfmiddlewaretoken':
+                id_pregunta = e
+                data_pregunta = PreguntasMate.objects.filter(id=id_pregunta).values()
+                alternativa = data[e]
+                alternativa_correcta = data_pregunta[0]['alternativa_correcta']
+                puntos = data_pregunta[0]['puntos']
+                if alternativa == alternativa_correcta:
+                    correccion_preguntas.append((id_pregunta,True,puntos))
+                else:
+                    correccion_preguntas.append((id_pregunta,False,0))
+
+        #---Estadisticas del certamen---
+        n_preguntas = len(correccion_preguntas)
+        n_preguntasCorrectas = 0
+        preguntas_incorrectas = []
+        puntos = 0
+        for e in correccion_preguntas:
+            if e[1]:
+                n_preguntasCorrectas += 1
+                puntos += e[2]
+            else:#Seleciono las preguntas incorrectas y sus respectivas respuestas
+                data_pregunta = PreguntasMate.objects.filter(id=e[0]).values()
+                pregunta = data_pregunta[0]['pregunta']
+                letra_alternativa_correcta = data_pregunta[0]['alternativa_correcta']
+
+                if letra_alternativa_correcta == 'A':
+                    correcta = data_pregunta[0]['alternativa_a']
+                elif letra_alternativa_correcta == 'B':
+                    correcta = data_pregunta[0]['alternativa_b']
+                elif letra_alternativa_correcta == 'C':
+                    correcta = data_pregunta[0]['alternativa_c']
+                elif letra_alternativa_correcta == 'D':
+                    correcta = data_pregunta[0]['alternativa_d']
+                elif letra_alternativa_correcta == 'E':
+                    correcta = data_pregunta[0]['alternativa_e']
+
+                preguntas_incorrectas.append((pregunta,correcta))
+        porcentaje_acierto = round((n_preguntasCorrectas/n_preguntas)*100,2)
+
+        perfil_usuario = profile.objects.filter(name_id = request.user.id)
+        puntos_usuario = perfil_usuario[0].punctuation
+        perfil_usuario.update(punctuation=puntos_usuario+puntos)
+        data = {
+            'n_preguntasCorrerctas':n_preguntasCorrectas,
+            'n_preguntas':n_preguntas,
+            'porcentaje_acierto':porcentaje_acierto,
+            'preguntas_incorrectas':preguntas_incorrectas,
+            'puntos': puntos,
+        }
+
+    return render(request,'app/resultadosCert.html',data)
 
 #----Todo lo relacionado con el usuario----
 def mi_perfil(request):

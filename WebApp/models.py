@@ -152,8 +152,6 @@ class Comentario(models.Model):
 
 
 #-------------------------- Modelo Preguntas Mate -------------------------
-
-
 class PreguntasMate(models.Model):
 
     #---Descripcion de las preguntas---

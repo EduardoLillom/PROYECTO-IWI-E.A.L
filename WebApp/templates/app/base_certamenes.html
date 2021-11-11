@@ -4,25 +4,20 @@
 {% block contenido %}
 
 <body>
-    <p>Pregunta: </p>
-    <!-- <div>
-        <ul>
-            <li><input type="checkbox" id="cbox1" value="alternativa_a"> <label for="cbox1">A) </label></li>
-            <li><input type="checkbox" id="cbox2" value="alternativa_b"> <label for="cbox2">B) </label></li>
-            <li><input type="checkbox" id="cbox3" value="alternativa_c"> <label for="cbox3">C) </label></li>
-            <li><input type="checkbox" id="cbox4" value="alternativa_d"> <label for="cbox4">D) </label></li>
-        </ul>
-    </div> -->
-    {% for e in preguntas %}
-        <p>{{e.pregunta}}</p>
-        <ul>
-            <li><input type="checkbox" id="cbox1" value="a"> <label for="cbox1">A) {{e.a}}</label></li>
-            <li><input type="checkbox" id="cbox2" value="b"> <label for="cbox2">B) {{e.b}}</label></li>
-            <li><input type="checkbox" id="cbox3" value="c"> <label for="cbox3">B) {{e.c}}</label></li>
-            <li><input type="checkbox" id="cbox4" value="d"> <label for="cbox4">B) {{e.d}}</label></li>
-        </ul>
-    {% endfor %}
-
+    <form action="/resultados/" method="post">
+        {% csrf_token %}
+        {% for e in preguntas %}
+            <p>{{e.pregunta}}</p>
+            <ul>
+                <li><input type="radio" id="cbox1" name={{e.id}} value="A"><label for="cbox1">A) {{e.a}}</label></li>
+                <li><input type="radio" id="cbox2" name={{e.id}} value="B"><label for="cbox2">B) {{e.b}}</label></li>
+                <li><input type="radio" id="cbox3" name={{e.id}} value="C"><label for="cbox3">C) {{e.c}}</label></li>
+                <li><input type="radio" id="cbox4" name={{e.id}} value="D"><label for="cbox4">D) {{e.d}}</label></li>
+                <li><input type="radio" id="cbox4" name={{e.id}} value="E"><label for="cbox4">E) {{e.e}}</label></li>
+            </ul>
+        {% endfor %}
+        <input type="submit" value="Enviar">
+    </form>
 
 </body>
 

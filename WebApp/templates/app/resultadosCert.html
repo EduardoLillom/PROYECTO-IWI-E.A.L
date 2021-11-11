@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+
+<body>
+    
+
+    <h1>A resulto correctamente {{n_preguntasCorrerctas}} de {{n_preguntas}} preguntas</h1>
+    <h1>su porcentaje de acierto es del {{porcentaje_acierto}}%</h1>
+    <h1>a ganada un total de {{puntos}} puntos.</h1>
+
+    <div>
+        {% for e in preguntas_incorrectas %}
+            <p>{{e.0}}</p>
+            <p>La alternativa correcta es:</p>
+            <p>{{e.1}}</p>
+        {% endfor %}
+    </div>
+</body>
+
+{% endblock %}

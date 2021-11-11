@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.urls import path
 from django.urls.conf import re_path
-from .views import crearPregunta, index, matematica, iniciar_sesion,registrarse,logout_view, foro, mi_perfil, certamen, guardarPregunta, certamen, Comentarios_pk, comentario_id
+from .views import *
 
 urlpatterns = [
     path('', iniciar_sesion, name="iniciar_sesion"),
@@ -16,5 +16,6 @@ urlpatterns = [
     path('post_id/<pk>/', Comentarios_pk, name='foro2'),
     path('comentario_id/<pk>/', comentario_id, name='foro3'),
     path('guardarPregunta/', guardarPregunta),
-    path('certame/',certamen)
+    path('certame/',certamen, name="certamen"),
+    path('resultados/',resultado, name="resultados"),
 ]

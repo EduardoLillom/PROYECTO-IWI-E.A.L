@@ -2,6 +2,7 @@ from typing import TextIO
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models.fields import CharField, IntegerField
 from django.db.models.signals import pre_save, post_save
 from django.shortcuts import render
 from django.utils.text import slugify
@@ -51,7 +52,7 @@ alt_correcta = [
     ('E', 'E'),
 ]
 
-# Create your models here.
+#----------------------------- modelo perfil de usuario -------------------
 class profile(models.Model):
     name = models.OneToOneField(User, on_delete=models.CASCADE)
     resolved_questions = models.IntegerField(default=0)
@@ -60,9 +61,7 @@ class profile(models.Model):
 def create_profile(sender, instance, created, *args, **kwargs):
     if created:
         profile.objects.create(name=instance)
-
 post_save.connect(create_profile, sender=User)
-
 
 class problema(models.Model):
     exercise = models.TextField()
@@ -73,9 +72,7 @@ class problema(models.Model):
     points = models.IntegerField()
     difficulty = models.IntegerField()
 
-
 #-------------------------------- Modelos Para Foro -------------------------------------------
-
 
 class PostForo(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -150,7 +147,6 @@ class Comentario(models.Model):
     class Meta:
         ordering = ['-tiempo']
 
-
 #-------------------------- Modelo Preguntas Mate -------------------------
 class PreguntasMate(models.Model):
 
@@ -177,7 +173,7 @@ class PreguntasMate(models.Model):
     pista = models.CharField(max_length=200)
     puntos = models.IntegerField()
 
-#modelo prueba de pregunta
+#-------------------------- modelo prueba de pregunta ---------------------
 class preguntaPrueba(models.Model):
     nombre_pregunta = models.CharField(max_length=50)
     texto = models.TextField(max_length=200)
@@ -190,3 +186,11 @@ class preguntaPrueba(models.Model):
 
     def __str__(self):
         return self.nombre_pregunta
+
+#-------------------------- modelo historial de certamenes ---------------------
+class historialCertamen(models.Model):
+    id_usuario = models.IntegerField()
+    id_preguntas = models.CharField(max_length=50)
+    fecha = models.DateField(auto_now_add=True)
+    hora = models.TimeField(auto_now_add=True)
+    estado = models.BooleanField(default=False)

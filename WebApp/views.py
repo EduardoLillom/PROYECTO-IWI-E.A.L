@@ -8,10 +8,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from WebApp.models import PreguntasMate, PostForo, profile
+from WebApp.models import PreguntasMate, PostForo, profile, historialCertamen
 from random import sample
 from .forms import FormComentarios
-# Create your views here.
 
 from .models import Comentario, PostForo, preguntaPrueba # prueba
 
@@ -61,33 +60,38 @@ def certamen(request):
             for e in range(preguntas_restantes):
                 preg_for_tem[choice(temas)] +=1
 
-    preguntaRandom = []
-    for tema in preg_for_tem:
-        preguntas_db = PreguntasMate.objects.filter(tema=tema).values()      
-        preguntaRandom.extend(sample(list(preguntas_db),preg_for_tem[tema]))
+        preguntaRandom = []
+        for tema in preg_for_tem:
+            preguntas_db = PreguntasMate.objects.filter(tema=tema).values()      
+            preguntaRandom.extend(sample(list(preguntas_db),preg_for_tem[tema]))
     
-    preguntas = []
-    for p in preguntaRandom:
-        e = {'id':'',
-            'pregunta':'',
-            'A':'',
-            'B':'',
-            'C':'',
-            'D':'',
-            'E':'',}
-        e['id'] = p['id']
-        e['pregunta'] = p['pregunta']
-        e['a'] = p['alternativa_a']
-        e['b'] = p['alternativa_b']
-        e['c'] = p['alternativa_c']
-        e['d'] = p['alternativa_d']
-        e['e'] = p['alternativa_e']  
-        preguntas.append(e)
-  
-    data = {'clase':'MAT021',
-    'preguntas':preguntas,
-    }
-    return render(request,'app/base_certamenes.html',data)
+        preguntas = []
+        id_preguntas = []
+        for p in preguntaRandom:
+            e = {'id':'',
+                'pregunta':'',
+                'A':'',
+                'B':'',
+                'C':'',
+                'D':'',
+                'E':'',}
+            e['id'] = p['id']
+            id_preguntas.append(p['id'])
+            e['pregunta'] = p['pregunta']
+            e['a'] = p['alternativa_a']
+            e['b'] = p['alternativa_b']
+            e['c'] = p['alternativa_c']
+            e['d'] = p['alternativa_d']
+            e['e'] = p['alternativa_e']  
+            preguntas.append(e)
+
+        certamen = historialCertamen.objects.create(id_usuario=request.user.id ,id_preguntas=id_preguntas,estado=False)
+        data = {'clase':'MAT021',
+        'preguntas':preguntas,
+        'id':certamen.id,
+        }
+        return render(request,'app/base_certamenes.html',data)
+
 
 def matematica(request):
     return render(request,'app/matematica.html')
@@ -96,11 +100,10 @@ def matematica(request):
 def resultado(request):
     if request.method == 'POST':
         data = request.POST
-
         #---verificar si las alternativas son correctas y las guarda en formato (id,True/False,puntos)---
         correccion_preguntas = []
         for e in data:
-            if e != 'csrfmiddlewaretoken':
+            if e not in ['csrfmiddlewaretoken', 'id']:
                 id_pregunta = e
                 data_pregunta = PreguntasMate.objects.filter(id=id_pregunta).values()
                 alternativa = data[e]
@@ -142,7 +145,10 @@ def resultado(request):
         perfil_usuario = profile.objects.filter(name_id = request.user.id)
         puntos_usuario = perfil_usuario[0].punctuation
         perfil_usuario.update(punctuation=puntos_usuario+puntos)
-        data = {
+        certamen = historialCertamen.objects.get(id=data['id'])
+        certamen.estado = True
+        certamen.save()
+        d = {
             'n_preguntasCorrerctas':n_preguntasCorrectas,
             'n_preguntas':n_preguntas,
             'porcentaje_acierto':porcentaje_acierto,
@@ -150,7 +156,7 @@ def resultado(request):
             'puntos': puntos,
         }
 
-    return render(request,'app/resultadosCert.html',data)
+    return render(request,'app/resultadosCert.html',d)
 
 #----Todo lo relacionado con el usuario----
 def mi_perfil(request):

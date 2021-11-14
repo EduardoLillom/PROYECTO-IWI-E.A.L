@@ -6,6 +6,7 @@
 <body>
     <form action="/resultados/" method="post">
         {% csrf_token %}
+        <input type="hidden" name="id" value={{id}}>
         {% for e in preguntas %}
             <p>{{e.pregunta}}</p>
             <ul>

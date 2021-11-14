@@ -4,20 +4,33 @@
 
 {% block contenido %}
 
-<body>
+<div class="elContenedor">
     
-
-    <h1>A resulto correctamente {{n_preguntasCorrerctas}} de {{n_preguntas}} preguntas</h1>
-    <h1>su porcentaje de acierto es del {{porcentaje_acierto}}%</h1>
-    <h1>a ganada un total de {{puntos}} puntos.</h1>
-
-    <div>
-        {% for e in preguntas_incorrectas %}
-            <p>{{e.0}}</p>
-            <p>La alternativa correcta es:</p>
-            <p>{{e.1}}</p>
-        {% endfor %}
+    <div class="pt-3" >
+        <div  class="alert alert-warning"  style=" z-index: -1;" >
+            <h1>Ha resuelto correctamente {{n_preguntasCorrerctas}} de {{n_preguntas}} preguntas.</h1>
+            <h1>Su porcentaje de acierto es del {{porcentaje_acierto}}%</h1>
+        </div>
+        
+        <div class="alert alert-info " >
+            <h4>Ha ganado un total de {{puntos}} puntos.</h4>
+        </div>
+            <br>        
+        <div>
+            {% for e in preguntas_incorrectas %}
+            <h5>Pregunta número ? :</h5>
+                <div class="preguntas mt-0" style="padding: 20px;">
+                    <p>{{e.0}}</p>
+                    <div class="alert alert-success" role="alert">
+                        <p>La alternativa correcta es:</p>
+                        <p>{{e.1}}</p>
+                    </div>
+                </div>
+                
+            {% endfor %}
+        </div>
     </div>
-</body>
+
+</div>
 
 {% endblock %}

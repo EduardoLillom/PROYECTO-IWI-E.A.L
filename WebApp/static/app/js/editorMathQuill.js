@@ -1,5 +1,3 @@
-
-
 //Da formato al problema escrito, aunque en un principio no hay nada, *se podria borrar
 var problemSpan = document.getElementById('problem');
 MQ.StaticMath(problemSpan);

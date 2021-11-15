@@ -4,30 +4,27 @@
 
 {% block contenido %}
 
-<div>
-    <article>
-        <header>
-            <h2>
-                {{instance.texto}}
-            </h2>
-        </header>
-        <div>
-            <div>
-                <a href="">
-                    {{instance.usuario.username}}
-                </a>
-            </div>
-            <form method="post">
+<div class="elContenedor">
+
+    <div class="preguntas mb-3" style="max-width: 800px;">
+        <div class="card-header"><i class="fas fa-user-circle pr-2">&nbsp;</i> {{instance.usuario.username}}</div>
+        <div class="card-body">
+          <h5 class="card-title"><!--posible titulo de la pregunta--></h5>
+          <p class="card-text"> <h2>{{instance.texto}}</h2></p>
+
+          <div>
+            <p>Escribir comentario:</p>
+            <form method="post"> 
                 {% csrf_token %}
                 {{form.as_p}}
 
-                <button type="submit">
+                <button class="btn btn-success" type="submit">
                     comentar
                 </button>
             </form>
 
         </div>
-    </article>
+    
     {{ver_comentario.count}}
     {% for ver_comentario in ver_comentario %}
     <div>
@@ -36,6 +33,10 @@
     </div>
     {% endfor %}
 </div>
+        </div>
+      </div>
+
+       
 
 
 {% endblock %}

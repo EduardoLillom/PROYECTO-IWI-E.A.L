@@ -194,3 +194,4 @@ class historialCertamen(models.Model):
     fecha = models.DateField(auto_now_add=True)
     hora = models.TimeField(auto_now_add=True)
     estado = models.BooleanField(default=False)
+    id_certamen = models.CharField(max_length=20, default="")

@@ -4,14 +4,14 @@
 
 {% block contenido %}
 
-<body>
-    
-    <div>
+    <div class="titulo">
         <h1>Generar certamen de matematica MAT021</h1>
         <p>Por favor ingrese las especificaciones para generar el certamen</p>
     </div>
 
-    <form action="/certame/" method="post">
+<div class="elContenedor">
+    <div><h1>{{id_certamen}}</h1></div>
+    <form action="/certame/?{{id_certamen}}" method="post">
         {% csrf_token %}
         
         <div class="flex-container"> <!--contenedor de 2 div (lado derecho e izquierdo)-->
@@ -67,5 +67,5 @@
         </div>
     </form>
     <script src="{% static 'app/js/MAT021.js' %}"></script>
-</body>
+</div>
 {% endblock %}

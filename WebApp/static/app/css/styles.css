@@ -175,3 +175,21 @@ body{
     margin-top: 40px;
     border: 1px solid rgb(222,223,225);
 }
+
+/*---index---*/
+
+.flex-index{
+    display: flex;
+    background-color: rgb(255,255,255);
+    padding: 10px;
+    border-radius: 5px ;
+    margin-bottom: 40px;
+    border: 1px solid rgb(222,223,225);
+}
+
+.flex-index >div{
+    width: 50%;
+    margin: 10px;
+    text-align: left;
+
+}

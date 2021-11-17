@@ -14,6 +14,7 @@ from .forms import FormComentarios, FormForo
 
 from .models import Comentario, PostForo, preguntaPrueba # prueba
 
+#----Funciones para los views----
 def generar_id(largo):
     letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     numeros = '0123456789'
@@ -21,6 +22,79 @@ def generar_id(largo):
     id_certamen = sample(base,largo)
     id_certamen = ''.join(id_certamen)
     return id_certamen
+
+def generar_preguntas(num_preg,temas):
+    preg_for_tem = {}
+    for tema in temas:
+        if tema not in preg_for_tem:
+            preg_for_tem[tema] = 0
+
+    if num_preg == len(temas):
+        for tema in preg_for_tem:
+            preg_for_tem[tema] += 1
+    elif num_preg%len(temas) == 0 and num_preg//len(temas) > 0:
+        for tema in temas:
+            preg_for_tem[tema] =  num_preg//len(temas)
+    else:
+        preguntas_restantes = num_preg-len(temas)*(num_preg//len(temas))
+        for tema in temas:
+            preg_for_tem[tema] =  num_preg//len(temas) 
+        for e in range(preguntas_restantes):
+            preg_for_tem[choice(temas)] +=1
+
+    preguntaRandom = []
+    for tema in preg_for_tem:
+        preguntas_db = PreguntasMate.objects.filter(tema=tema).values()      
+        preguntaRandom.extend(sample(list(preguntas_db),preg_for_tem[tema]))
+
+    preguntas = []
+    id_preguntas = []
+    for p in preguntaRandom:
+        e = {'id':'',
+            'pregunta':'',
+            'A':'',
+            'B':'',
+            'C':'',
+            'D':'',
+            'E':'',}
+        e['id'] = p['id']
+        id_preguntas.append(p['id'])
+        e['pregunta'] = p['pregunta']
+        e['a'] = p['alternativa_a']
+        e['b'] = p['alternativa_b']
+        e['c'] = p['alternativa_c']
+        e['d'] = p['alternativa_d']
+        e['e'] = p['alternativa_e']  
+        preguntas.append(e)
+    return preguntas, id_preguntas
+
+def recuperar_preguntas(id_preguntas_c):
+    preguntas_db = []
+    for id in id_preguntas_c:
+        pregunta = PreguntasMate.objects.filter(id=id).values()
+        preguntas_db.append(pregunta)
+
+    preguntas = []
+    for p in preguntas_db:
+        e = {'id':'',
+            'pregunta':'',
+            'A':'',
+            'B':'',
+            'C':'',
+            'D':'',
+            'E':'',}
+
+        e['id'] = p[0]['id']
+        e['pregunta'] = p[0]['pregunta']
+        e['a'] = p[0]['alternativa_a']
+        e['b'] = p[0]['alternativa_b']
+        e['c'] = p[0]['alternativa_c']
+        e['d'] = p[0]['alternativa_d']
+        e['e'] = p[0]['alternativa_e']
+            
+        preguntas.append(e)
+    return preguntas
+#----Views-----------------------
 
 def crearPregunta(request):
     if request.method == 'POST':
@@ -52,7 +126,9 @@ def home(request):
     puntos_usuarios = profile.objects.order_by('-punctuation')
     if len(puntos_usuarios) > 10:
         puntos_usuarios = puntos_usuarios[:10]
-    
+    nombre_usuario = request.user.first_name
+    appelido_usuario = request.user.last_name
+    name = nombre_usuario + " " + appelido_usuario
     top = []
     for usuario in puntos_usuarios:
         id_usuario = usuario.name_id
@@ -63,70 +139,34 @@ def home(request):
         top.append((nombre_completo,puntuacion))
 
     data = {
-        'top': top
+        'name': name,
+        'top': top,
     }
 
     return render(request,'app/index.html',data)
 
 #----Generador de certamenes----
 def certamen(request):
-    id_certamen = request.META['QUERY_STRING']
-    certamen_h = list(historialCertamen.objects.filter(id_certamen=id_certamen))
-    if len(certamen_h) == 0:
+    id_certamen = request.GET.get('id')
+    certamen_h = historialCertamen.objects.filter(id_certamen=id_certamen)
+    if (certamen_h.exists() == False):#Si el certamen no esta creado lo crea y lo guarda en el historial 
         if request.method == 'POST':
+            #----Extraer datos del POST----
             datos = request.POST
             num_preg = int(request.POST['number_of_questions'])
             time = request.POST['tiempo']
+            #----Separar temas----
             temas = []
             for e in datos:
                 if e not in ('csrfmiddlewaretoken','tiempo','number_of_questions'):
                     temas.append(e)
+            #----Generar preguntas----
+            preguntas,id_preguntas = generar_preguntas(num_preg,temas)
 
-            preg_for_tem = {}
-            for tema in temas:
-                if tema not in preg_for_tem:
-                    preg_for_tem[tema] = 0
-
-            if num_preg == len(temas):
-                for tema in preg_for_tem:
-                    preg_for_tem[tema] += 1
-            elif num_preg%len(temas) == 0 and num_preg//len(temas) > 0:
-                for tema in temas:
-                    preg_for_tem[tema] =  num_preg//len(temas)
-            else:
-                preguntas_restantes = num_preg-len(temas)*(num_preg//len(temas))
-                for tema in temas:
-                    preg_for_tem[tema] =  num_preg//len(temas) 
-                for e in range(preguntas_restantes):
-                    preg_for_tem[choice(temas)] +=1
-
-            preguntaRandom = []
-            for tema in preg_for_tem:
-                preguntas_db = PreguntasMate.objects.filter(tema=tema).values()      
-                preguntaRandom.extend(sample(list(preguntas_db),preg_for_tem[tema]))
-        
-            preguntas = []
-            id_preguntas = []
-            for p in preguntaRandom:
-                e = {'id':'',
-                    'pregunta':'',
-                    'A':'',
-                    'B':'',
-                    'C':'',
-                    'D':'',
-                    'E':'',}
-                e['id'] = p['id']
-                id_preguntas.append(p['id'])
-                e['pregunta'] = p['pregunta']
-                e['a'] = p['alternativa_a']
-                e['b'] = p['alternativa_b']
-                e['c'] = p['alternativa_c']
-                e['d'] = p['alternativa_d']
-                e['e'] = p['alternativa_e']  
-                preguntas.append(e)
-
-            
+            #----Crear el certamen en la DB para su posterior verificacion----
             historialCertamen.objects.create(id_usuario=request.user.id ,id_preguntas=id_preguntas,estado=False,id_certamen=id_certamen)
+
+            #----Data de html y envio al mismo----
             data = {'clase':'MAT021',
             'preguntas':preguntas,
             'tiempo':time,
@@ -135,35 +175,26 @@ def certamen(request):
             }
             return render(request,'app/base_certamenes.html',data)
 
-
-    elif len(certamen_h) == 1 and certamen_h[0].estado == True:
+    elif certamen_h.exists() and certamen_h[0].estado == False :#Si el certamen ya esta creado pero no ha sido terminado
         id_preguntas_c = certamen_h[0].id_preguntas
         id_preguntas_c = id_preguntas_c[1:-1]
         id_preguntas_c = id_preguntas_c.split(',')
-        preguntas_db = []
-        for id in id_preguntas_c:
-            pregunta = PreguntasMate.objects.filter(id=id).values()
-            preguntas_db.append(pregunta)
+        
+        preguntas = recuperar_preguntas(id_preguntas_c)
 
-        preguntas = []
-        for p in preguntas_db:
-            e = {'id':'',
-                'pregunta':'',
-                'A':'',
-                'B':'',
-                'C':'',
-                'D':'',
-                'E':'',}
-
-            e['id'] = p[0]['id']
-            e['pregunta'] = p[0]['pregunta']
-            e['a'] = p[0]['alternativa_a']
-            e['b'] = p[0]['alternativa_b']
-            e['c'] = p[0]['alternativa_c']
-            e['d'] = p[0]['alternativa_d']
-            e['e'] = p[0]['alternativa_e']
-              
-            preguntas.append(e)
+        data = {'clase':'MAT021',
+        'preguntas':preguntas,
+        'tiempo':'',
+        'estatus':False,
+        'id':id_certamen,
+        }
+        return render(request,'app/base_certamenes.html',data)
+    elif certamen_h.exists() and certamen_h[0].estado:#Si el certamen ya esta creado y ha sido terminado
+        id_preguntas_c = certamen_h[0].id_preguntas
+        id_preguntas_c = id_preguntas_c[1:-1]
+        id_preguntas_c = id_preguntas_c.split(',')
+        
+        preguntas = recuperar_preguntas(id_preguntas_c)
 
         data = {'clase':'MAT021',
         'preguntas':preguntas,
@@ -172,7 +203,7 @@ def certamen(request):
         'id':id_certamen,
         }
         return render(request,'app/base_certamenes.html',data)
-        
+
 def matematica(request):
     id_certamen = generar_id(5) + str(request.user.id)
     data = {'id_certamen':id_certamen}

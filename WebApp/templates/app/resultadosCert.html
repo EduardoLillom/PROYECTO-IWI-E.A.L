@@ -31,6 +31,14 @@
         </div>
     </div>
 
+    <script>
+        //disable back button forever
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
+
 </div>
 
 {% endblock %}

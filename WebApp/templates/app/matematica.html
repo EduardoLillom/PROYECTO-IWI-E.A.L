@@ -10,8 +10,7 @@
     </div>
 
 <div class="elContenedor">
-    <div><h1>{{id_certamen}}</h1></div>
-    <form action="/certame/?{{id_certamen}}" method="post">
+    <form action="/certame/?id={{id_certamen}}" method="post">
         {% csrf_token %}
         
         <div class="flex-container"> <!--contenedor de 2 div (lado derecho e izquierdo)-->

@@ -12,7 +12,7 @@ urlpatterns = [
     path('registrarse/', registrarse, name="registrarse"),
     path('foro/', foro, name="foro1"),
     path('mi_perfil/', mi_perfil, name="mi_perfil"),
-    path('certamen/<id_cetamen>', certamen, name="certamen"),
+    path('certamen/', certamen, name="certamen"),
     path('post_id/<pk>/', Comentarios_pk, name='foro2'),
     path('comentario_id/<pk>/', comentario_id, name='foro3'),
     path('guardarPregunta/', guardarPregunta),

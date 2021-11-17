@@ -1,10 +1,7 @@
 {% extends 'app/base.html' %}
-
 {% load static %}
 
 
-{% block js %}
-{% endblock %}
 
 {% block css %}
 {% endblock %}
@@ -12,10 +9,41 @@
 
 {% block contenido %}
 
-<div>
-    <h2>Generador de certamenes</h2>
-    <div>
-        <!-- <h2></h2> -->
+<div class="titulo"><h2>Bienvenido <p id="mostrarNombre">(nombre de usuario)!</p></h2></div>
+
+
+<div class="elContenedor">
+
+    <div class="flex-index">
+
+        <div>
+                <!-- <p>Ranking puntos de prestigo</p> -->
+            <p>preguntas recientes</p>
+            <p>problema popular (problema con menos puntos de aciertos)</p>
+        </div>
+        <div>
+            <h3> <i class="fas fa-trophy" style="color: gold;"></i> &nbsp; Ranking puntos de prestigio</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre usuario </th>
+                        <th scope="col">Puntos de prestigo</th>
+                    </tr>
+                </thead>
+                
+                {% for u in top %}
+                <thbody>
+                    <tr>
+                        <td > {{u.0}}</td>
+                        <td style="padding-left: 10px;"> {{u.1}}</td>
+                    </tr>
+                </thbody>
+                
+                {% endfor %}
+            </table>
+        
+        </div>
+
     </div>
 </div>
 

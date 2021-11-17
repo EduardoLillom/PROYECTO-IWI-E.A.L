@@ -1,0 +1,19 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div class="titulo"><h1>Mi perfil</h1></div>
+
+<div class="elContenedor"> 
+    
+    
+    <div>
+        <p id="nombreUsuario">{{UserName}}</p>
+        <p>{{correo}}</p>
+        <p>{{puntos}}</p>
+    </div>
+</div>
+
+{% endblock %}

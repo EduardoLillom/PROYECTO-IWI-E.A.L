@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div class="elContenedor">
+    <p>
+        {% for post in post %}
+                <div class="preguntas mb-3" style="max-width: 800px;">
+                    <div class="card-header"><i class="fas fa-user-circle pr-2">&nbsp;</i> {{post.usuario}}</div>
+                    <div class="card-body">
+                      <h5 class="card-title"><!--posible titulo de la pregunta--></h5>
+                      <p class="card-text"> <h2>{{post.texto}}</h2></p>
+        
+                      <div>
+                        <a href="{% url 'foro2' post.pk %}">
+                            <button type="button" class="btn btn-secondary">
+                                Comentar
+                            </button>
+                        </a>
+                    </div>
+                    </div>
+                  </div>
+
+        {% endfor %}
+    </p>
+</div>
+
+{% endblock %}

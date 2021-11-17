@@ -11,15 +11,24 @@ var answerMathField = MQ.MathField(answerSpan, {
 
         //escribe por consola el texto escrito en formato LaTeX, es para probar, *se puede borrar
         //console.log(enteredMath);
+        //antigua funcion 
+        //function escribe(id_of_input){
+            //document.getElementById("answer").innerHTML =enteredMath;
+            //jQuery para añdir la pregunta en latex a un input
+            //$("#id_texto").val('\\(' + enteredMath +'\\)');
+            //var input_id = '#'+id_of_input;
+            //$(input_id).val($(input_id).val() + enteredMath);}
+        
         
         //boton escribe el problema editado en pantalla
-        function escribe(){
+        function escribe(id_of_input){
             document.getElementById("problem").innerHTML =enteredMath;
-            //jQuery para añdir la pregunta en latex a un input
-            $("#pregunta_math").val(enteredMath);
+    
+            var input_id = '#'+id_of_input;
+            $(input_id).val($(input_id).val() + (' \\(' + enteredMath +'\\)') );
         }
         document.getElementById("boton-escribir").onclick = function(){
-            escribe();
+            escribe("id_texto");
             //cambia el formato de latex para visualizarlo en mathquill
             var problemSpan = document.getElementById('problem');
             MQ.StaticMath(problemSpan);
@@ -30,6 +39,18 @@ var answerMathField = MQ.MathField(answerSpan, {
     }
   
 });
+
+/* //posible función para previsualizar la pregunta escrita
+function previsualizar(){
+    preguntaCreada = $("#id_texto").val();
+    console.log(preguntaCreada);
+    document.getElementById("previzualizacion-pregunta").innerHTML= preguntaCreada;
+}
+document.getElementById("ver-pregunta").onclick = function(){
+    previsualizar();
+}
+
+*/
 
 
 //BOTONES
@@ -73,7 +94,7 @@ document.getElementById("elevar").onclick = function(){
 
 //raiz n
 var raizN = document.getElementById('raizN');
-MQ.StaticMath(raizN);
+
 
 function botonraizN(){
     answerMathField.cmd('\\nthroot'); 
@@ -114,9 +135,69 @@ var limite = document.getElementById('limite');
 MQ.StaticMath(limite);
 
 function botonlimite(){
-    answerMathField.write('\lim_{ {x} \\to \\infty }( )'); 
+    answerMathField.write('\\lim_{ {x} \\to \\infty }( )'); 
     answerMathField.focus() // centra el cursor en la ultima función escrita
 }
 document.getElementById("limite").onclick = function(){
     botonlimite();
+}
+
+//pi
+var pi = document.getElementById('pi');
+MQ.StaticMath(pi);
+
+function botonpi(){
+    answerMathField.write('\\pi'); 
+    answerMathField.focus() // centra el cursor en la ultima función escrita
+}
+document.getElementById("pi").onclick = function(){
+    botonpi();
+}
+
+//theta
+var theta = document.getElementById('theta');
+MQ.StaticMath(theta);
+
+function botontheta(){
+    answerMathField.write('\\theta'); 
+    answerMathField.focus() // centra el cursor en la ultima función escrita
+}
+document.getElementById("theta").onclick = function(){
+    botontheta();
+}
+
+//infinito
+var inf = document.getElementById('inf');
+MQ.StaticMath(inf);
+
+function botoninf(){
+    answerMathField.write('\\infty'); 
+    answerMathField.focus() // centra el cursor en la ultima función escrita
+}
+document.getElementById("inf").onclick = function(){
+    botoninf();
+}
+
+//integral
+var integral = document.getElementById('integral');
+MQ.StaticMath(integral);
+
+function botonintegral(){
+    answerMathField.write('\\int_{}'); 
+    answerMathField.focus() // centra el cursor en la ultima función escrita
+}
+document.getElementById("integral").onclick = function(){
+    botonintegral();
+}
+
+//derivada
+var derivada = document.getElementById('derivada');
+MQ.StaticMath(derivada);
+
+function botonderivada(){
+    answerMathField.write('\\frac{d}{dx}\\left(\\right)'); 
+    answerMathField.focus() // centra el cursor en la ultima función escrita
+}
+document.getElementById("derivada").onclick = function(){
+    botonderivada();
 }

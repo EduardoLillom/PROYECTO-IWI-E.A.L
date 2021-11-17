@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from WebApp.models import PreguntasMate, PostForo, profile, historialCertamen
 from random import sample
-from .forms import FormComentarios
+from .forms import FormComentarios, FormForo
 
 from .models import Comentario, PostForo, preguntaPrueba # prueba
 
@@ -22,12 +22,24 @@ def generar_id(largo):
     id_certamen = ''.join(id_certamen)
     return id_certamen
 
-def crearPregunta(request):    
-    pregunta_Prueba = preguntaPrueba.objects.all()
+def crearPregunta(request):
+    if request.method == 'POST':
+        form = FormForo(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.autor_id = request.user.username
+            post.save()
+            messages.success(request, f"Tu pregunta se ha publicado correctamente")
+            return redirect('/foro/') 
+        else:
+            for msg in form.error_messages:
+                messages.error(request, form.error_messages[msg])
+
+    form = FormForo()
     data={
-            'pregunta_Prueba' : pregunta_Prueba
+            'form' : form
     }
-    return render(request,'app/crearPregunta.html',data)
+    return render(request,'app/crearPost.html',data)
 
 def guardarPregunta(request):
     texto=request.POST["texto"]

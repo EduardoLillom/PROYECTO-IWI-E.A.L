@@ -93,6 +93,9 @@ class PostForo(models.Model):
         content_type = ContentType.objects.get_for_model(PostForo)
         return content_type
 
+    class Meta:
+        ordering = ['-tiempo']
+
 def nueva_url(instance, url=None):
     
     slug = slugify(instance.texto)

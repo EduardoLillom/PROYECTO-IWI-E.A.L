@@ -49,16 +49,38 @@
 
                     <div class="md-form mx-3 my-3 " id="time" style="display: none;">
                         <label for="timeSelec">Selecciona tu tiempo</label>
-                        <input class="form-control w-25 " type="time" id="timeSelec" name="tiempo" >
+                        <input class="form-control w-25 " type="time" id="timeSelec"  min="00:10" value="00:00"  name="tiempo" >
                     </div>
                     
                     <div class="md-form mx-3 my-3">
-                        <label>Ingrese numero de preguntas que quiere en el certamen</label>
-                        <input class="form-control w-25" type="number" name='number_of_questions' placeholder="N° preguntas" >
+                        <label for="num-preguntas">Ingrese numero de preguntas que quiere en el certamen</label>
+                            <select id="num-preguntas" class="form-select"  style="width: 80px;"  name='number_of_questions'>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                            </select>
+                        
                     </div>
                 
 
-                <!--boton-->
+                <!--boton-<input class="form-control w-25" type="number" name='number_of_questions' placeholder="N° preguntas" >------>
                 <div class="form-form mx-3 my-5 " ><button type="submit" class="btn btn-success ">Generar Certamen</button></div>
 
                   </div>  

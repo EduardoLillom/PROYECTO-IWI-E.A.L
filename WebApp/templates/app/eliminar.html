@@ -1,0 +1,25 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div>
+    <h1>
+        Confirmar
+    </h1>
+    <form method= "POST">
+        {% csrf_token %}
+        <p>
+            ¿ Estas seguro de eliminar el comentario: {{instance.texto}} ?
+        </p>
+        <button type="submit">
+                Confirmar
+        </button>
+        <a href="{{instance.content_object.get_absolute_url}}">
+            Cancelar
+        </a>
+    </form>
+</div>
+
+{% endblock %}

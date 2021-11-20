@@ -349,11 +349,25 @@ def Comentarios_pk(request, pk):
         obj_id = form.cleaned_data.get('object_id')
         texto_data = form.cleaned_data.get('texto')
 
+        padre_obj = None
+
+        try:
+            padre_id = int(request.POST.get("padre_identificador"))
+        except:
+            padre_id = None
+
+        if padre_id:
+            padre_qs = Comentario.objects.filter(id=padre_id)
+            if padre_qs.exists() and padre_qs.count() == 1:
+                padre_obj = padre_qs.first()
+
+
         comentarios, created = Comentario.objects.get_or_create(
             usuario = request.user,
             content_type = content_type,
             object_id = obj_id,
-            texto = texto_data
+            texto = texto_data,
+            padre = padre_obj
         )
 
         return HttpResponseRedirect(comentarios.content_object.get_absolute_url())
@@ -375,3 +389,25 @@ def comentario_id(request, pk):
         'comentario':instance
     }
     return render(request, 'app/instance.html', contexto)
+
+def eliminarComentario(request, id):
+    instance = get_object_or_404(Comentario, id=id)
+
+    if instance.usuario != request.user:
+
+        response = HttpResponse("No eres el usuario que creó este comentario")
+        response.status_code = 403
+        return response
+
+    if request.method == "POST":
+        padre_instance_url = instance.content_object.get_absolute_url()
+        instance.delete()
+        messages.success(request, "Comentario eliminado")
+        return HttpResponseRedirect(padre_instance_url)
+
+    context = {
+        'instance': instance
+    }
+
+    return render(request, 'app/eliminar.html', context )
+

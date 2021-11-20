@@ -15,6 +15,7 @@ urlpatterns = [
     path('certamen/', certamen, name="certamen"),
     path('post_id/<pk>/', Comentarios_pk, name='foro2'),
     path('comentario_id/<pk>/', comentario_id, name='foro3'),
+    path('eliminar/<id>/', eliminarComentario, name='eliminar'),
     path('guardarPregunta/', guardarPregunta),
     path('certame/',certamen, name="certamen"),
     path('resultados/',resultado, name="resultados"),

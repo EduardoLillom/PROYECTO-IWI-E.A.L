@@ -1,0 +1,44 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div>
+    <h2>A resuelto un total de {{n_certamenes}} certamenes</h2>
+    <h2>acumulando un total de {{puntos}} puntos</h2>
+</div>
+<div>
+    <table>
+        <tr>
+            <th>Codigo</th>
+            <th>Estado</th>
+            <th>Puntos obtenidos</th>
+            <th>Numero de preguntas</th>
+            <th>Preguntas correctas</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+        </tr>
+        {% for certamen in certamenes %}
+        <tr>
+            <th><a href="/certamen/?id={{certamen.id_certamen}}">{{certamen.id_certamen}}</a></th>
+            {% if certamen.estado %}
+                <th>Terminado</th>
+            {% else %}
+                <th>Sin Terminar</th>
+            {% endif %}
+            <th>{{certamen.puntos}}</th>
+            <th>{{certamen.n_preguntas}}</th>
+            <th>{{certamen.n_correctas}}</th>
+            <th>{{certamen.fecha}}</th>
+            <th>{{certamen.hora}}</th>
+        </tr>
+
+
+        {% endfor %}
+        </tr>
+    </table>
+</div>
+
+
+{% endblock %}

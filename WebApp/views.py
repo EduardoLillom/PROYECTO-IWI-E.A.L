@@ -260,6 +260,9 @@ def resultado(request):
         perfil_usuario.update(punctuation=puntos_usuario+puntos)
         certamen = historialCertamen.objects.get(id_certamen=data['id'])
         certamen.estado = True
+        certamen.n_preguntas = n_preguntas
+        certamen.n_correctas = str(n_preguntasCorrectas)+'/'+str(n_preguntas)
+        certamen.puntos = puntos
         certamen.save()
         d = {
             'n_preguntasCorrerctas':n_preguntasCorrectas,
@@ -317,6 +320,16 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+def registro_certamenes(request):
+    certamenes = historialCertamen.objects.filter(id_usuario=request.user.id)
+    print(len(certamenes))
+    data= {
+        'puntos': profile.objects.get(name_id=request.user.id).punctuation,
+        'certamenes': historialCertamen.objects.filter(id_usuario=request.user.id),
+        'n_certamenes': len(certamenes),
+            
+    }
+    return render(request,'app/registro_certamenes.html',data)
 #----Todo lo relacionado con el foro----
 def foro(request):
     
@@ -410,4 +423,3 @@ def eliminarComentario(request, id):
     }
 
     return render(request, 'app/eliminar.html', context )
-

@@ -196,3 +196,22 @@ body{
 }
 
 /*--crear pregunta--*/
+/*-----------------*/
+
+/*preguntas certamen*/
+.flex-pregunta-certamen{
+    display: flex;
+    padding: 10px;
+    border-radius: 5px ;
+    margin-bottom: 40px;
+}
+
+.flex-pregunta-certamen >div{
+    margin: 10px;
+    margin-top: 0px;
+    text-align: left;
+
+}
+
+/*-----------------*/
+

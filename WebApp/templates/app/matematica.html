@@ -4,53 +4,68 @@
 
 {% block contenido %}
 
-<body>
-    <div>
+    <div class="titulo">
         <h1>Generar certamen de matematica MAT021</h1>
-        <p>por favor ingrese las espesificasiones para generar el certamen</p>
+        <p>Ingrese las especificaciones para generar el certamen</p>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            <h3>Materias de calculo</h3>
-            <ul>
-                <li><input type="checkbox" id="cbox1" name='numeros_reales' > <label for="cbox2">Números reales</label></li>
-                <li><input type="checkbox" id="cbox2" name='funciones' > <label for="cbox3">Funciones</label></li>
-                <li><input type="checkbox" id="cbox3" name='limite' > <label for="cbox4">Límites</label></li>
-                <li><input type="checkbox" id="cbox4" name='continuidad'> <label for="cbox5">Continuidad</label></li>
-                <li><input type="checkbox" id="cbox5" name='calculo_diferencial'> <label for="cbox6">Cálculo diferencial</label></li>
-            </ul>
-        </div>
-        <div>
-            <h3>Materias de complemento</h3>
-            <ul>
-                <li><input type="checkbox" id="cbox6" name='logica_proposicional' > <label for="cbox2">Lógica proposicional</label></li>
-                <li><input type="checkbox" id="cbox7" name='conjunto' > <label for="cbox2">Conjuntos</label></li>
-                <li><input type="checkbox" id="cbox8" name='relaciones'><label for="cbox2">Relaciones</label></li>
-                <li><input type="checkbox" id="cbox9" name='trigonometria'><label for="cbox2">Trigonometría</label></li>
-                <li><input type="checkbox" id="cbox10" name='exponencial_logaritmo'><label for="cbox2">Exponencial y logaritmo</label></li>
-                <li><input type="checkbox" id="cbox11" name='geometria_analitica'><label for="cbox2">Geometría analítica</label></li>
-                <li><input type="checkbox" id="cbox12" name='induccion'><label for="cbox2">Inducción</label></li>
-                <li><input type="checkbox" id="cbox13" name='sunatoria'><label for="cbox2">Sumatorias</label></li>
-                <li><input type="checkbox" id="cbox14" name='numeros_complejos'><label for="cbox2">Números complejos</label></li>
-                <li><input type="checkbox" id="cbox15" name='polinomios'><label for="cbox2">Polinomios</label></li>          
-            </ul>
-        </div>
-        <div>
-            <input type="checkbox" id="cboxTime" onchange="showtime()"><label for="cbox2">Tiempo para realizar el Certamen</label>
-            <div id="time" style="display: none;" >
-                <input type="number" name="tiempo" placeholder="tiempo">
-            </div>
-            <div>
-                <label>Ingrese numero de preguntas que quiere en el certamen</label>
-                <input type="number" name='number_of_questions' placeholder="Numero de preguntas" >
-            </div>
-        </div>
-        <div>
-            <input type="submit" value="Generar certamen">
-        </div>
 
+<div class="elContenedor">
+    <form action="/certame/?id={{id_certamen}}" method="post">
+        {% csrf_token %}
+        
+        <div class="flex-container"> <!--contenedor de 2 div (lado derecho e izquierdo)-->
+
+            <div> <!--div lado izquierdo-->
+                <div>
+                    <h3>Materias de cálculo</h3>
+                    
+                        <div class="form-check"><input class="form-check-input" type="checkbox" checked value="" id="cBox1" name="numeros_reales"> <label class="form-check-label" for="cBox1">Números reales</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox2" name="funciones"> <label class="form-check-label" for="cBox2">Funciones</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox3" name="limite"> <label class="form-check-label" for="cBox3">Límites</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox4" name="continuidad"> <label class="form-check-label" for="cBox4">Continuidad</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox5" name="calculo_diferencial'"> <label class="form-check-label" for="cBox5">Cálculo diferencial</label></div>
+                    
+                </div>
+                <div>
+                    <h3>Materias de complemento</h3>
+
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox6" name="logica_proposicional"> <label class="form-check-label" for="cBox6">Lógica proposicional</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox7" name="conjunto"> <label class="form-check-label" for="cBox7">Conjuntos</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox8" name="relaciones"> <label class="form-check-label" for="cBox8">Relaciones</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox9" name="trigonometria"> <label class="form-check-label" for="cBox9">Trigonometría</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox10" name="exponencial_logaritmo"> <label class="form-check-label" for="cBox10">Exponencial y logaritmo</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox11" name="geometria_analitica"> <label class="form-check-label" for="cBox11">Geometría analítica</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox12" name="induccion"> <label class="form-check-label" for="cBox12">Inducción</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox13" name="sumatoria_productoria"> <label class="form-check-label" for="cBox13">Sumatorias</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox14" name="numeros_complejos"> <label class="form-check-label" for="cBox14">Números complejos</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox15" name="polinomios"> <label class="form-check-label" for="cBox15">Polinomios</label></div>          
+                </div>
+            </div>
+
+            <div> <!--Div de lado derecho-->
+                <div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="cboxTime" value="" onchange="showtime()" ><label class="form-check-label" for="cboxTime">Deseas tener tiempo para realizar el Certamen ? </label></div>
+                    
+
+                    <div class="md-form mx-3 my-3 " id="time" style="display: none;">
+                        <label for="timeSelec">Selecciona tu tiempo</label>
+                        <input class="form-control w-25 " type="time" id="timeSelec"  min="00:10" value="" name="tiempo" >
+                    </div>
+                    
+                    <div class="md-form mx-3 my-3">
+                        <label for="num-preguntas">Ingrese numero de preguntas que quiere en el certamen</label>
+                            <input class="form-control" type="number"  style="width: 80px;" max="20" min="1" value="1" name='number_of_questions'>
+                        
+                    </div>
+                
+
+                <!--boton-<input class="form-control w-25" type="number" name='number_of_questions' placeholder="N° preguntas" >------>
+                <div class="form-form mx-3 my-5 " ><button type="submit" class="btn btn-success ">Generar Certamen</button></div>
+
+                  </div>  
+            </div>   
+        </div>
     </form>
     <script src="{% static 'app/js/MAT021.js' %}"></script>
-</body>
+</div>
 {% endblock %}

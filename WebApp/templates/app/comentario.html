@@ -1,0 +1,80 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div class="elContenedor">
+
+    <div class="preguntas mb-3" style="max-width: 800px;">
+        <div class="card-header"><i class="fas fa-user-circle pr-2">&nbsp;</i> {{instance.usuario.username}}</div>
+        <div class="card-body">
+          <h5 class="card-title"><!--posible titulo de la pregunta--></h5>
+          <p class="card-text"> <h2>{{instance.texto}}</h2></p>
+
+          <div>
+            <p>Escribir comentario:</p>
+            <form method="post"> 
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <button class="btn btn-success" type="submit">
+                    comentar
+                </button>
+            </form>
+
+        </div>
+    
+    {{ver_comentario.count}}
+    {% for ver_comentario in ver_comentario %}
+    <div>
+
+            {{ver_comentario.usuario}}
+            {{ver_comentario.texto}} {{ver_comentario.tiempo}}
+        
+            {% if request.user == ver_comentario.usuario %}
+            <a href="{% url 'eliminar' ver_comentario.id %}">
+                Eliminar Comentario
+            </a>
+            {% endif %}
+        
+        <button class="b_responder">
+            Responder
+        </button>
+        <div class="abrir_caja">
+            <form method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" name="padre_identificador" value="{{ver_comentario.id}}">
+                {{form}}
+                <button type="submit">
+                    Enviar respuesta
+                </button>
+            </form>
+
+            <div>
+                {%for respuesta in ver_comentario.hijo %}
+                    <div>
+                        <span>
+                        {{respuesta.usuario}}
+                        {{respuesta.texto}}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+        </div>
+      </div>
+
+<script>
+    $('.b_responder').click(function(e){
+        e.preventDefault();
+        $(this).next('.abrir_caja').fadeToggle()
+    })
+</script>      
+
+
+{% endblock %}

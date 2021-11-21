@@ -14,8 +14,25 @@
         <br>
         {% csrf_token %}
         <input type="hidden" name="id" value={{id}}>
+
+        <div style="padding: auto;">
+            <input class="btn btn-danger" type="submit" value="Terminar">
+            <button id="anterior" class="carousel btn btn-outline-info" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+              <span style="color: black;"> ← Anterior</span>
+            </button>
+            <button id="siguiente" class="carousel btn btn-outline-info" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+              <span style="color: black;">Siguiente →</span>
+            </button>
+        </div>
+
+
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" >
+            <div style="margin-top: 100px;">
+        
         {% for e in preguntas %}
-        <h4>Pregunta:</h4>
+        <div class="carousel-item " id="carrusel">
+            <div class=" d-none d-md-block">
+        <h4>Pregunta (numero pregunta)</h4>
         <div class="preguntas" style="padding: 20px;">
             <p>{{e.pregunta}}</p>
             {% if estatus == False %}
@@ -32,14 +49,25 @@
                 <p><input type="radio" id="cbox4" name={{e.id}} value="E" disabled>E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
             {% endif %}
         </div>
+
+        </div>
+        </div>
             
         {% endfor %}
-        <input class="btn btn-danger" type="submit" value="Terminar">
+        </div>
+        </div>
+
+        
     </form>
 
 </div>
 
 <script>
+    //carrusel de preguntas
+    var carrusel =document.getElementById("carrusel");
+    carrusel.setAttribute("class", "carousel-item active ");
+
+    //tiempo
     if (!(document.getElementById("time") == null)) {
         var tim = document.getElementById("time").innerHTML.split(":");
         var segundos = parseInt(tim[0])*3600 + parseInt(tim[1])*60;

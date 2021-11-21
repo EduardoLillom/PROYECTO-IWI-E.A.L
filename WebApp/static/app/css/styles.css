@@ -53,6 +53,7 @@ body{
     position: absolute;
     color: white;
     background: #03569b;
+    z-index: 1;
     
     visibility: hidden;
     opacity: 0;

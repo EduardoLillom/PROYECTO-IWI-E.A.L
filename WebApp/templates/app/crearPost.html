@@ -23,12 +23,12 @@
             
 
             <div class="editor">
-            
-                <div id="botones"><h1>Editor MathQuill</h1>
+            <h1>Editor MathQuill</h1>
+                <div id="botones" class="btn-group" role="group">
                     <button type="text" id="raizCuadrada" class="btn btn-danger"> \sqrt{☐} </button>
                     <button id="xAlCuadrado" class="btn btn-danger"> ☐^{2} </button>
                     <button id="elevar" class="btn btn-danger"> ☐^☐ </button>
-                    <button id="raizN" class="btn btn-danger" style="padding-top: 0px; height: 50px;"> $$\sqrt[☐]{☐}$$ </button>
+                    <button id="raizN" class="btn btn-danger"> $$\sqrt[☐]{☐}$$ </button>
                     <button id="fraccion" class="btn btn-danger"> \frac{☐}{☐} </button>
                     <button id="logaritmo" class="btn btn-danger"> \log_{☐}(☐) </button>
                     <button id="limite" class="btn btn-danger"> \lim </button>
@@ -36,9 +36,15 @@
                     <button id="theta" class="btn btn-danger"> \theta </button>
                     <button id="inf" class="btn btn-danger"> \infty </button>
                     <button id="integral" class="btn btn-danger"> \int_{☐}^{☐} </button>
-                    <button id="derivada" class="btn btn-danger"> \frac{d}{dx}\left(☐\right) </button>
+                    
+                    </div>
+                    <br>
+                    <div>
+                        <button id="derivada" class="btn btn-danger"> \frac{d}{dx}\left(☐\right) </button>
+                    </div>
+                    
               
-                    <button id="boton-escribir" class="btn btn-success">Agregar</button></div>
+                    <button id="boton-escribir" class="btn btn-success">Agregar</button>
               
                     <!--campo para escribir el problema-->
                     Diseñe el problema a preguntar aquí

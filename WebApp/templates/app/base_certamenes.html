@@ -3,61 +3,71 @@
 
 {% block contenido %}
 
-<div>
-    {% if tiempo %}
-        <h1 id="time" >{{tiempo}}:00</h1>
-    {% endif %}
-</div>
-
 <div class="elContenedor">
-    <form action="/resultados/" method="post" name="formulario">
-        <br>
+    <form action="/resultados/" method="post" name="formulario"><br>
         {% csrf_token %}
         <input type="hidden" name="id" value={{id}}>
 
-        <div style="padding: auto;">
-            <input class="btn btn-danger" type="submit" value="Terminar">
-            <button id="anterior" class="carousel btn btn-outline-info" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-              <span style="color: black;"> ← Anterior</span>
-            </button>
-            <button id="siguiente" class="carousel btn btn-outline-info" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-              <span style="color: black;">Siguiente →</span>
-            </button>
-        </div>
+        <div class="flex-pregunta-certamen">
+            <div style="width: 85%;"  id="carouselExampleDark" class="carousel carousel-dark" >
+                <div>
+                    {% for e in preguntas %}
+                    <div class="carousel-item " id="carrusel">
+                        <div class=" d-none d-md-block">
+                            <div>
+                                <button id="anterior" class="carousel btn btn-outline-info" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                    <span style="color: black;"> ← Anterior</span>
+                                </button>
+                                <button id="siguiente" class="carousel btn btn-outline-info" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                    <span style="color: black;">Siguiente →</span>
+                                </button>
+                            </div>
 
+                            <h4 style="margin-top: 20px;">Pregunta {{forloop.counter}}</h4>
+                            <div class="preguntas" style="padding: 20px; margin-top: 15px;">
+                                <p>{{e.pregunta}}</p>
+                                {% if estatus == False %}
+                                    <p hidden><input checked type="radio" id="cbox" name={{e.id}}> &nbsp; <label for="cbox"></label></p> <!--input default-->
 
-        <div id="carouselExampleDark" class="carousel carousel-dark slide" >
-            <div style="margin-top: 100px;">
-        
-        {% for e in preguntas %}
-        <div class="carousel-item " id="carrusel">
-            <div class=" d-none d-md-block">
-        <h4>Pregunta (numero pregunta)</h4>
-        <div class="preguntas" style="padding: 20px;">
-            <p>{{e.pregunta}}</p>
-            {% if estatus == False %}
-                <p><input type="radio" id="cbox1" name={{e.id}} value="A">A) &nbsp; <label for="cbox1"> {{e.a}}</label></p>
-                <p><input type="radio" id="cbox2" name={{e.id}} value="B">B) &nbsp; <label for="cbox2"> {{e.b}}</label></p>
-                <p><input type="radio" id="cbox3" name={{e.id}} value="C">C) &nbsp; <label for="cbox3"> {{e.c}}</label></p>
-                <p><input type="radio" id="cbox4" name={{e.id}} value="D">D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
-                <p><input type="radio" id="cbox4" name={{e.id}} value="E">E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
-            {% else %}
-                <p><input type="radio" id="cbox1" name={{e.id}} value="A" disabled>A) &nbsp; <label for="cbox1"> {{e.a}}</label></p>
-                <p><input type="radio" id="cbox2" name={{e.id}} value="B" disabled>B) &nbsp; <label for="cbox2"> {{e.b}}</label></p>
-                <p><input type="radio" id="cbox3" name={{e.id}} value="C" disabled>C) &nbsp; <label for="cbox3"> {{e.c}}</label></p>
-                <p><input type="radio" id="cbox4" name={{e.id}} value="D" disabled>D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
-                <p><input type="radio" id="cbox4" name={{e.id}} value="E" disabled>E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
-            {% endif %}
-        </div>
+                                    <p><input type="radio" id="cbox1" name={{e.id}} value="A">A) &nbsp; <label for="cbox1"> {{e.a}}</label></p>
+                                    <p><input type="radio" id="cbox2" name={{e.id}} value="B">B) &nbsp; <label for="cbox2"> {{e.b}}</label></p>
+                                    <p><input type="radio" id="cbox3" name={{e.id}} value="C">C) &nbsp; <label for="cbox3"> {{e.c}}</label></p>
+                                    <p><input type="radio" id="cbox4" name={{e.id}} value="D">D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
+                                    <p><input type="radio" id="cbox4" name={{e.id}} value="E">E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
+                                {% else %}
+                                    <p hidden><input checked type="radio" id="cbox" name={{e.id}} value="A"> &nbsp; <label for="cbox"></label></p><!--input default-->
 
-        </div>
-        </div>
-            
-        {% endfor %}
-        </div>
-        </div>
+                                    <p><input type="radio" id="cbox1" name={{e.id}} value="A" disabled>A) &nbsp; <label for="cbox1"> {{e.a}}</label></p>
+                                    <p><input type="radio" id="cbox2" name={{e.id}} value="B" disabled>B) &nbsp; <label for="cbox2"> {{e.b}}</label></p>
+                                    <p><input type="radio" id="cbox3" name={{e.id}} value="C" disabled>C) &nbsp; <label for="cbox3"> {{e.c}}</label></p>
+                                    <p><input type="radio" id="cbox4" name={{e.id}} value="D" disabled>D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
+                                    <p><input type="radio" id="cbox4" name={{e.id}} value="E" disabled>E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-        
+            <div style="margin-top: 104px;">
+                <div>
+                    {% if tiempo %}
+                        <h4>Tiempo:</h4>
+                        <h1 id="time" >{{tiempo}}:00</h1>
+                    {% endif %}
+                </div>
+
+                <div style="padding: auto; margin-bottom: 10px;"> <!--botones numero pregunta-->
+                            {% for e in preguntas %}
+                            <button type="button"  data-bs-target="#carouselExampleDark" data-bs-slide-to="{{forloop.counter|add:-1}}" class="btn btn-primary"aria-label="Slide {{forloop.counter}}">{{forloop.counter}}</button>
+                            {% endfor %}
+                </div>
+                <input class="btn btn-danger" type="submit" value="Terminar">
+                
+            </div>
+        </div>
     </form>
 
 </div>

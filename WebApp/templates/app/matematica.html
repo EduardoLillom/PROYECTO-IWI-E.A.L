@@ -6,7 +6,7 @@
 
     <div class="titulo">
         <h1>Generar certamen de matematica MAT021</h1>
-        <p>Por favor ingrese las especificaciones para generar el certamen</p>
+        <p>Ingrese las especificaciones para generar el certamen</p>
     </div>
 
 <div class="elContenedor">
@@ -19,7 +19,7 @@
                 <div>
                     <h3>Materias de cálculo</h3>
                     
-                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox1" name="numeros_reales"> <label class="form-check-label" for="cBox1">Números reales</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" checked value="" id="cBox1" name="numeros_reales"> <label class="form-check-label" for="cBox1">Números reales</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox2" name="funciones"> <label class="form-check-label" for="cBox2">Funciones</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox3" name="limite"> <label class="form-check-label" for="cBox3">Límites</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox4" name="continuidad"> <label class="form-check-label" for="cBox4">Continuidad</label></div>
@@ -49,33 +49,12 @@
 
                     <div class="md-form mx-3 my-3 " id="time" style="display: none;">
                         <label for="timeSelec">Selecciona tu tiempo</label>
-                        <input class="form-control w-25 " type="time" id="timeSelec"  min="00:10" value="00:00"  name="tiempo" >
+                        <input class="form-control w-25 " type="time" id="timeSelec"  min="00:10" value="" name="tiempo" >
                     </div>
                     
                     <div class="md-form mx-3 my-3">
                         <label for="num-preguntas">Ingrese numero de preguntas que quiere en el certamen</label>
-                            <select id="num-preguntas" class="form-select"  style="width: 80px;"  name='number_of_questions'>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                            </select>
+                            <input class="form-control" type="number"  style="width: 80px;" max="20" min="1" value="1" name='number_of_questions'>
                         
                     </div>
                 

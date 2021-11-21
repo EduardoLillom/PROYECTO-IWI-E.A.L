@@ -10,7 +10,7 @@
     </div>
 
 <div class="elContenedor">
-    <form action="/certame/?id={{id_certamen}}" method="post">
+    <form action="/certame/?id={{id_certamen}}" method="post" onsubmit="return validacion()">
         {% csrf_token %}
         
         <div class="flex-container"> <!--contenedor de 2 div (lado derecho e izquierdo)-->
@@ -19,7 +19,7 @@
                 <div>
                     <h3>Materias de cálculo</h3>
                     
-                        <div class="form-check"><input class="form-check-input" type="checkbox" checked value="" id="cBox1" name="numeros_reales"> <label class="form-check-label" for="cBox1">Números reales</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox1" name="numeros_reales"> <label class="form-check-label" for="cBox1">Números reales</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox2" name="funciones"> <label class="form-check-label" for="cBox2">Funciones</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox3" name="limite"> <label class="form-check-label" for="cBox3">Límites</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="cBox4" name="continuidad"> <label class="form-check-label" for="cBox4">Continuidad</label></div>
@@ -54,7 +54,7 @@
                     
                     <div class="md-form mx-3 my-3">
                         <label for="num-preguntas">Ingrese numero de preguntas que quiere en el certamen</label>
-                            <input class="form-control" type="number"  style="width: 80px;" max="20" min="1" value="1" name='number_of_questions'>
+                            <input class="form-control" type="number"  style="width: 80px;" max="20" min="1" value="1" name='number_of_questions' id="num_preg">
                         
                     </div>
                 

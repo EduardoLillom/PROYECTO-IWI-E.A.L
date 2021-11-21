@@ -203,3 +203,6 @@ class historialCertamen(models.Model):
     hora = models.TimeField(auto_now_add=True)
     estado = models.BooleanField(default=False)
     id_certamen = models.CharField(max_length=20, default="")
+    n_preguntas = models.IntegerField(default=0)
+    n_correctas = models.CharField(max_length=20, default="")
+    puntos = models.IntegerField(default=0)

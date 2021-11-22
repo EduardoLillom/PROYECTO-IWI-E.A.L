@@ -20,4 +20,5 @@ urlpatterns = [
     path('guardarPregunta/', guardarPregunta),
     path('certame/',certamen, name="certamen"),
     path('resultados/',resultado, name="resultados"),
+    path('banco-preguntas/',banco_preguntas, name="banco-preguntas"),
 ]

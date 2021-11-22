@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <label>Filtrar por temas</label>
+        <select name="Tema">
+            <option value="0">Temas</option>
+                <optgroup label="MAT021">
+                    <option value="numeros_reales">Numeros reales</option>
+                    <option value="funciones">Funciones</option>
+                    <option value="limite">Limite</option>
+                    <option value="continuidad">Continuidad</option>
+                    <option value="calculo_diferencial">Calculo diferencial</option>
+                    <option value="logica_proposicional">Logica proposicional</option>
+                    <option value="conjunto">Conjunto</option>
+                    <option value="relaciones">Relaciones</option>
+                    <option value="trigonometria">Trigonometria</option>
+                    <option value="exponencial_logaritmo">Exponencial logaritmo</option>
+                    <option value="geometria_analitica">Geometria analitica</option>
+                    <option value="induccion">Induccion</option>
+                    <option value="sumatoria_productoria">Sumatoria productoria</option>
+                    <option value="numeros_complejos">Numeros complejos</option>
+                    <option value="polinomios">Polinomios</option>
+                </optgroup>
+        </select>
+        <input type="submit" value="Filtrar">
+    </form>
+    <div>
+        {% for pregunta in preguntas %}
+            <div>
+                <p>{{ pregunta.pregunta }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

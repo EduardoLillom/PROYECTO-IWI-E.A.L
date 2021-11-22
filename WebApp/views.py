@@ -95,7 +95,6 @@ def recuperar_preguntas(id_preguntas_c):
         preguntas.append(e)
     return preguntas
 #----Views-----------------------
-
 def crearPregunta(request):
     if request.method == 'POST':
         form = FormForo(request.POST)
@@ -325,11 +324,12 @@ def registro_certamenes(request):
     print(len(certamenes))
     data= {
         'puntos': profile.objects.get(name_id=request.user.id).punctuation,
-        'certamenes': historialCertamen.objects.filter(id_usuario=request.user.id),
+        'certamenes': certamenes,
         'n_certamenes': len(certamenes),
             
     }
     return render(request,'app/registro_certamenes.html',data)
+
 #----Todo lo relacionado con el foro----
 def foro(request):
     
@@ -423,3 +423,15 @@ def eliminarComentario(request, id):
     }
 
     return render(request, 'app/eliminar.html', context )
+
+#----Banco de preguntas----
+def banco_preguntas(request):
+    preguntas = PreguntasMate.objects.all()
+    if request.method == 'POST':
+        print(request.POST['Tema'])
+        preguntas = PreguntasMate.objects.filter(tema=request.POST['Tema'])
+    
+    data = {
+        'preguntas': preguntas,
+    }
+    return render(request,'app/banco_preguntas.html',data)

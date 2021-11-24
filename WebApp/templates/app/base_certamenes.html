@@ -35,13 +35,37 @@
                                     <p><input type="radio" id="cbox4" name={{e.id}} value="D">D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
                                     <p><input type="radio" id="cbox4" name={{e.id}} value="E">E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
                                 {% else %}
-                                    <p hidden><input checked type="radio" id="cbox" name={{e.id}} value="A"> &nbsp; <label for="cbox"></label></p><!--input default-->
+                                    <!-- <p hidden><input checked type="radio" id="cbox" name={{e.id}} value="A"> &nbsp; <label for="cbox"></label></p>input default -->
 
+                                    {% if e.marcada == "A" %}
+                                    <p><input type="radio" id="cbox1" name={{e.id}} value="A" checked disabled>A) &nbsp; <label for="cbox1"> {{e.a}}</label></p>
+                                    {% else %}
                                     <p><input type="radio" id="cbox1" name={{e.id}} value="A" disabled>A) &nbsp; <label for="cbox1"> {{e.a}}</label></p>
+                                    {% endif %}
+
+                                    {% if e.marcada == "B" %}
+                                    <p><input type="radio" id="cbox2" name={{e.id}} value="B" checked disabled>B) &nbsp; <label for="cbox2"> {{e.b}}</label></p>
+                                    {% else %}
                                     <p><input type="radio" id="cbox2" name={{e.id}} value="B" disabled>B) &nbsp; <label for="cbox2"> {{e.b}}</label></p>
+                                    {% endif %}
+
+                                    {% if e.marcada == "C" %}
+                                    <p><input type="radio" id="cbox3" name={{e.id}} value="C" checked disabled>C) &nbsp; <label for="cbox3"> {{e.c}}</label></p>
+                                    {% else %}
                                     <p><input type="radio" id="cbox3" name={{e.id}} value="C" disabled>C) &nbsp; <label for="cbox3"> {{e.c}}</label></p>
+                                    {% endif %}
+
+                                    {% if e.marcada == "D" %}
+                                    <p><input type="radio" id="cbox4" name={{e.id}} value="D" checked disabled>D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
+                                    {% else %}
                                     <p><input type="radio" id="cbox4" name={{e.id}} value="D" disabled>D) &nbsp; <label for="cbox4"> {{e.d}}</label></p>
+                                    {% endif %}
+
+                                    {% if e.marcada == "E" %}
+                                    <p><input type="radio" id="cbox4" name={{e.id}} value="E" checked disabled>E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
+                                    {% else %}
                                     <p><input type="radio" id="cbox4" name={{e.id}} value="E" disabled>E) &nbsp; <label for="cbox4"> {{e.e}}</label></p>
+                                    {% endif %}
                                 {% endif %}
                                 
                             </div>

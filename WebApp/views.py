@@ -192,9 +192,12 @@ def certamen(request):
         id_preguntas_c = certamen_h[0].id_preguntas
         id_preguntas_c = id_preguntas_c[1:-1]
         id_preguntas_c = id_preguntas_c.split(',')
-        
-        preguntas = recuperar_preguntas(id_preguntas_c)
+        alternativas_marcadas = certamen_h[0].alternativa_marcadas
+        alternativas_marcadas= alternativas_marcadas.split(',')
 
+        preguntas = recuperar_preguntas(id_preguntas_c)
+        for e in preguntas:
+            e['marcada'] = alternativas_marcadas[preguntas.index(e)]
         data = {'clase':'MAT021',
         'preguntas':preguntas,
         'tiempo':'',
@@ -214,11 +217,13 @@ def resultado(request):
         data = request.POST
         #---verificar si las alternativas son correctas y las guarda en formato (id,True/False,puntos)---
         correccion_preguntas = []
+        alternativas_marcadas = []
         for e in data:
             if e not in ['csrfmiddlewaretoken', 'id']:
                 id_pregunta = e
                 data_pregunta = PreguntasMate.objects.filter(id=id_pregunta).values()
                 alternativa = data[e]
+                alternativas_marcadas.append(alternativa)
                 alternativa_correcta = data_pregunta[0]['alternativa_correcta']
                 puntos = data_pregunta[0]['puntos']
                 if alternativa == alternativa_correcta:
@@ -226,6 +231,8 @@ def resultado(request):
                 else:
                     correccion_preguntas.append((id_pregunta,False,0))
 
+        alternativas_marcadas = ','.join(alternativas_marcadas)
+        
         #---Estadisticas del certamen---
         n_preguntas = len(correccion_preguntas)
         n_preguntasCorrectas = 0
@@ -254,15 +261,18 @@ def resultado(request):
                 preguntas_incorrectas.append((pregunta,correcta))
         porcentaje_acierto = round((n_preguntasCorrectas/n_preguntas)*100,2)
 
-        perfil_usuario = profile.objects.filter(name_id = request.user.id)
-        puntos_usuario = perfil_usuario[0].punctuation
-        perfil_usuario.update(punctuation=puntos_usuario+puntos)
         certamen = historialCertamen.objects.get(id_certamen=data['id'])
-        certamen.estado = True
-        certamen.n_preguntas = n_preguntas
-        certamen.n_correctas = str(n_preguntasCorrectas)+'/'+str(n_preguntas)
-        certamen.puntos = puntos
-        certamen.save()
+        if certamen.estado == False:
+            perfil_usuario = profile.objects.filter(name_id = request.user.id)
+            puntos_usuario = perfil_usuario[0].punctuation
+            perfil_usuario.update(punctuation=puntos_usuario+puntos)
+            
+            certamen.estado = True
+            certamen.alternativa_marcadas = alternativas_marcadas
+            certamen.n_preguntas = n_preguntas
+            certamen.n_correctas = str(n_preguntasCorrectas)+'/'+str(n_preguntas)
+            certamen.puntos = puntos
+            certamen.save()
         d = {
             'n_preguntasCorrerctas':n_preguntasCorrectas,
             'n_preguntas':n_preguntas,
@@ -321,11 +331,11 @@ def logout_view(request):
 
 def registro_certamenes(request):
     certamenes = historialCertamen.objects.filter(id_usuario=request.user.id)
-    print(len(certamenes))
+    
     data= {
         'puntos': profile.objects.get(name_id=request.user.id).punctuation,
         'certamenes': certamenes,
-        'n_certamenes': len(certamenes),
+        'n_certamenes': certamenes.count(),
             
     }
     return render(request,'app/registro_certamenes.html',data)
